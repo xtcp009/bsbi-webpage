@@ -3,16 +3,46 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { nav, site } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+    setHidden(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    function onScroll() {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      lastY = y;
+
+      if (open || y < 24) {
+        setHidden(false);
+        return;
+      }
+      if (delta > 8) setHidden(true);
+      else if (delta < -8) setHidden(false);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/40 bg-charleston/95 text-cream backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-40 border-b border-gold/40 bg-charleston/95 text-cream backdrop-blur-md transition-transform duration-300 ease-out motion-reduce:transition-none ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
           <Image

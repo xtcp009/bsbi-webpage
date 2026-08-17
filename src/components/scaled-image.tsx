@@ -5,13 +5,14 @@ type Props = Omit<ImageProps, "className"> & {
   frameClassName?: string;
 };
 
-export function ScaledImage({ className = "", frameClassName = "", alt, fill, ...props }: Props) {
+export function ScaledImage({ className = "", frameClassName = "", alt, fill, sizes, ...props }: Props) {
   return (
-    <div className={`relative overflow-hidden ${frameClassName}`}>
+    <div className={`relative min-w-0 overflow-hidden ${frameClassName}`}>
       <Image
         alt={alt}
         fill={fill}
-        className={fill ? `object-cover ${className}` : `size-full object-cover ${className}`}
+        sizes={sizes ?? (fill ? "100vw" : undefined)}
+        className={fill ? `object-cover object-center ${className}` : `h-auto w-full max-w-full object-contain ${className}`}
         {...props}
       />
     </div>

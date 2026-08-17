@@ -26,7 +26,7 @@ export default function GalleryPage() {
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-cover object-center"
-                  frameClassName="aspect-[3/4] w-full sm:aspect-[4/3]"
+                  frameClassName="aspect-[4/5] w-full sm:aspect-[4/3]"
                 />
                 <figcaption className="px-3 py-2 text-xs text-muted">{photo.caption}</figcaption>
               </figure>

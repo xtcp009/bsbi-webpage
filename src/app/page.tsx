@@ -18,18 +18,16 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="border-b border-line bg-[#e7d7b8]">
-        <div className="relative mx-auto max-w-6xl">
-          <ScaledImage
-            src="/images/hero-sketch.jpg"
-            alt="Architectural drawing of Brith Sholom Beth Israel Synagogue"
-            fill
-            priority
-            sizes="(max-width: 1152px) 100vw, 1152px"
-            className="object-cover object-center"
-            frameClassName="aspect-[3/1] w-full max-h-28 sm:max-h-44 lg:max-h-56"
-          />
-        </div>
+      <section className="overflow-hidden border-b border-line bg-[#e7d7b8]">
+        <ScaledImage
+          src="/images/hero-sketch.jpg"
+          alt="Architectural drawing of Brith Sholom Beth Israel Synagogue"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_48%]"
+          frameClassName="w-full aspect-[2.2/1] sm:aspect-[2.6/1] lg:aspect-[3/1]"
+        />
         <div className="ornament" />
         <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-7">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal">
@@ -120,7 +118,7 @@ export default async function HomePage() {
             fill
             sizes="(max-width: 1024px) 100vw, 40vw"
             className="object-cover object-center sepia"
-            frameClassName="aspect-[4/3] w-full border border-white/10"
+            frameClassName="aspect-[4/3] w-full max-w-full border border-white/10"
           />
         </div>
       </FadeContent>

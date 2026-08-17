@@ -17,7 +17,7 @@ export default function DonatePage() {
         {site.donateUrl ? (
           <ActionLink href={site.donateUrl}>Give online</ActionLink>
         ) : (
-          <ActionLink href="/contact">Contact the office</ActionLink>
+          <ActionLink href={site.phoneHref}>Call {site.phoneDisplay}</ActionLink>
         )}
         <section className="panel panel-gold p-5">
           <h2 className="font-[family-name:var(--font-display)] text-2xl">Funds</h2>

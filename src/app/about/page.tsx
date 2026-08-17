@@ -25,7 +25,7 @@ export default function AboutPage() {
             fill
             sizes="(max-width: 1024px) 100vw, 60vw"
             className="object-cover object-center"
-            frameClassName="aspect-[3/1] w-full max-h-32 border border-line sm:max-h-48"
+            frameClassName="aspect-[3/1] w-full border border-line"
           />
           <article className="flex flex-col gap-5 text-sm leading-relaxed sm:text-base">
             <p>{copy.rabbiBody}</p>

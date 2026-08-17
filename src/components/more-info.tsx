@@ -83,7 +83,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_17.5rem]">
       <div className="min-w-0">{children}</div>
-      <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+      <div className="min-w-0 lg:sticky lg:top-6 lg:self-start">
         <MoreInfo />
       </div>
     </div>
