@@ -36,7 +36,7 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
   return (
     <figure>
       <div
-        className="hero-slideshow relative w-full overflow-hidden bg-parchment"
+        className="hero-slideshow relative w-full overflow-hidden bg-cream"
         role="region"
         aria-roledescription="carousel"
         aria-labelledby={labelId}
@@ -61,9 +61,9 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
               alt={i === index ? slide.alt : ""}
               fill
               priority={i === 0}
-              quality={75}
+              quality={80}
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-contain object-center"
             />
           </motion.div>
         ))}

@@ -64,7 +64,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f2eee5",
+  themeColor: "#fffdf8",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -77,7 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${sourceSerif.variable} ${sourceSans.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-parchment text-ink">
+      <body className="flex min-h-full flex-col bg-cream text-ink">
         <a className="skip-link" href="#main">
           Skip to content
         </a>

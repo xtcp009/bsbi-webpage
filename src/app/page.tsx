@@ -11,9 +11,9 @@ import ScrollReveal from "@/components/react-bits/scroll-reveal";
 import { HeroSlideshow } from "@/components/hero-slideshow";
 import { ScaledImage } from "@/components/scaled-image";
 import { SourceNote } from "@/components/source-note";
-import { copy } from "@/content/copy";
+import { copy, weeklyClasses } from "@/content/copy";
 import { calendarEntryToEvent } from "@/lib/events";
-import { allHeroSlides } from "@/lib/hero-slides";
+import { HERO_SLIDES } from "@/lib/hero-slides";
 import { getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
 import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -33,7 +33,7 @@ export default async function HomePage() {
   return (
     <>
       <section>
-        <HeroSlideshow slides={allHeroSlides(live.slides)} />
+        <HeroSlideshow slides={HERO_SLIDES} />
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
           <BlurText
             text="Brith Sholom Beth Israel"
@@ -146,6 +146,39 @@ export default async function HomePage() {
             />
             <figcaption className="museum-caption">Main entrance, 182 Rutledge Avenue</figcaption>
           </figure>
+        </div>
+        </FadeContent>
+      </section>
+
+      <section className="border-t border-line">
+        <FadeContent>
+        <div className="wrap py-16 lg:py-24">
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 className="display text-3xl text-charleston">Weekly classes</h2>
+            <Link href="/community#classes" className="text-link">
+              All classes
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-8 sm:grid-cols-3">
+            {weeklyClasses.map((item) => (
+              <Link key={item.title} href="/community#classes" className="min-w-0">
+                <ScaledImage
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover object-center"
+                  frameClassName="aspect-[4/3] w-full bg-cream"
+                />
+                <h3 className="display mt-4 text-xl text-charleston">{item.title}</h3>
+                <p className="mt-1 text-base text-muted">
+                  {item.when}
+                  <span aria-hidden> · </span>
+                  {item.where}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
         </FadeContent>
       </section>

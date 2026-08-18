@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f2eee5;
-  --paper-light: #f8f5ee;
+  --paper: #f6f1e6;
+  --paper-light: #fffdf8;
   --ink: #24231f;
   --ink-muted: #69655c;
   --green: #243c32;
@@ -11,8 +11,9 @@
   --rule: rgba(36, 35, 31, 0.18);
   --radius: 2px;
 
-  --cream: var(--paper-light);
-  --parchment: var(--paper);
+  --beige: #e8d5b5;
+  --cream: #fffdf8;
+  --parchment: var(--cream);
   --muted: var(--ink-muted);
   --charleston: var(--green-dark);
   --teal: var(--green);
@@ -24,12 +25,13 @@
   --page-narrow: 42rem;
   --page-pad: clamp(1.25rem, 3.6vw, 2.5rem);
   --section-y: clamp(2.5rem, 5vw, 5.5rem);
-  --header-h: 11rem;
-  --header-ivory: #f7f2e8;
+  --header-h: 17rem;
+  --header-ivory: var(--beige);
   --footer-navy: #111a25;
 }
 
 @theme inline {
+  --color-beige: var(--beige);
   --color-cream: var(--cream);
   --color-parchment: var(--parchment);
   --color-ink: var(--ink);
@@ -76,7 +78,7 @@ html {
 body {
   margin: 0;
   overflow-x: clip;
-  background: var(--parchment);
+  background: var(--cream);
   color: var(--ink);
   font-family: var(--font-source), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.0625rem;
@@ -303,12 +305,12 @@ figure img {
 .site-header,
 .site-footer {
   isolation: isolate;
-  background: var(--header-ivory);
+  background: var(--beige);
   color: var(--ink);
 }
 
 .site-header {
-  min-height: clamp(7.25rem, 20vw, 12.5rem);
+  min-height: clamp(9.5rem, 28vw, 17rem);
 }
 
 .site-footer {
@@ -322,6 +324,18 @@ figure img {
   inset: 0;
   z-index: 1;
   pointer-events: none;
+}
+
+.site-header::before {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--header-ivory) 42%, transparent) 0%,
+    color-mix(in srgb, var(--header-ivory) 28%, transparent) 48%,
+    color-mix(in srgb, var(--header-ivory) 18%, transparent) 100%
+  );
+}
+
+.site-footer::before {
   background: linear-gradient(
     to bottom,
     color-mix(in srgb, var(--header-ivory) 88%, transparent) 0%,
@@ -359,7 +373,9 @@ figure img {
 }
 
 .gate-ornament-nav .gate-ornament-img {
-  object-position: center 30%;
+  object-fit: contain;
+  object-position: center top;
+  opacity: 0.72;
 }
 
 .gate-ornament-footer .gate-ornament-img {
@@ -368,26 +384,17 @@ figure img {
 }
 
 @media (max-width: 767px) {
-  .gate-ornament-img {
-    object-position: center;
+  .gate-ornament-footer .gate-ornament-img {
+    object-position: center bottom;
     transform: scale(1.35);
   }
 }
 
 .hero-slideshow {
-  height: clamp(12.5rem, 42svh, 20rem);
-}
-
-@media (min-width: 640px) {
-  .hero-slideshow {
-    height: clamp(16rem, 44svh, 24rem);
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-slideshow {
-    height: clamp(18rem, 42svh, 28rem);
-  }
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 13rem;
+  max-height: min(68svh, 36rem);
 }
 
 .nav-link {
