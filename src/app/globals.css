@@ -24,7 +24,7 @@
   --page-narrow: 42rem;
   --page-pad: clamp(1.25rem, 3.6vw, 2.5rem);
   --section-y: clamp(2.5rem, 5vw, 5.5rem);
-  --header-h: 4.25rem;
+  --header-h: 6.5rem;
 }
 
 @theme inline {
@@ -293,9 +293,110 @@ figure img {
   }
 }
 
+.site-chrome {
+  isolation: isolate;
+}
+
+.site-chrome::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--parchment) 38%, transparent),
+    color-mix(in srgb, var(--parchment) 12%, transparent) 48%,
+    color-mix(in srgb, var(--parchment) 32%, transparent)
+  );
+}
+
+.gate-rail {
+  width: 100%;
+  height: 2.75rem;
+  background: var(--gold);
+  opacity: 0.78;
+  pointer-events: none;
+  mask-mode: alpha;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.gate-rail-header,
+.gate-rail-footer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: auto;
+  width: 100%;
+}
+
+.gate-rail-header {
+  opacity: 0.46;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.gate-rail-footer {
+  opacity: 0.32;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+@media (min-width: 1024px) {
+  .gate-rail {
+    height: 3.25rem;
+  }
+}
+
+.hero-slideshow {
+  height: clamp(12.5rem, 42svh, 20rem);
+}
+
+@media (min-width: 640px) {
+  .hero-slideshow {
+    height: clamp(16rem, 44svh, 24rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-slideshow {
+    height: clamp(18rem, 42svh, 28rem);
+  }
+}
+
+.hero-slideshow-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--parchment) 88%, transparent);
+  color: var(--ink);
+}
+
+.hero-slideshow-nav:hover,
+.hero-slideshow-nav:focus-visible {
+  background: var(--parchment);
+}
+
 .nav-link {
   position: relative;
   text-decoration: none;
+  text-shadow: 0 0 0.7em var(--parchment);
 }
 
 .nav-link:hover,
@@ -313,27 +414,6 @@ figure img {
   bottom: 0.15em;
   height: 2px;
   background: var(--gold);
-}
-
-.gate-rail {
-  width: 100%;
-  height: 2.75rem;
-  background: var(--gold);
-  opacity: 0.78;
-  pointer-events: none;
-  mask-mode: alpha;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-@media (min-width: 1024px) {
-  .gate-rail {
-    height: 3.25rem;
-  }
 }
 
 .gate-rail-divider {

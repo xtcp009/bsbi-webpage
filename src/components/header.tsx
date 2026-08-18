@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { GateRail } from "@/components/gate-rail";
 import { nav, site } from "@/lib/site";
@@ -11,38 +11,10 @@ import { nav, site } from "@/lib/site";
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastY = useRef(0);
-  const ignoreHideUntil = useRef(0);
 
   useEffect(() => {
     setOpen(false);
-    setHidden(false);
   }, [pathname]);
-
-  useEffect(() => {
-    lastY.current = window.scrollY;
-
-    function onScroll() {
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        setHidden(false);
-        return;
-      }
-      const y = Math.max(0, window.scrollY);
-      const delta = y - lastY.current;
-      lastY.current = y;
-
-      if (open || Date.now() < ignoreHideUntil.current || y < 48) {
-        setHidden(false);
-        return;
-      }
-      if (delta > 24) setHidden(true);
-      else if (delta < -16) setHidden(false);
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [open]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -51,20 +23,10 @@ export function Header() {
     };
   }, [open]);
 
-  function toggleMenu(event: React.SyntheticEvent) {
-    event.stopPropagation();
-    ignoreHideUntil.current = Date.now() + 600;
-    setHidden(false);
-    setOpen((value) => !value);
-  }
-
   return (
-    <header
-      className={`sticky top-0 z-50 border-b border-line bg-parchment text-ink transition-transform duration-300 ease-out motion-reduce:transition-none ${
-        hidden && !open ? "-translate-y-full lg:translate-y-0" : "translate-y-0"
-      }`}
-    >
-      <div className="wrap flex items-center gap-3 py-1.5 lg:gap-5 lg:py-1.5">
+    <header className="site-chrome relative z-50 overflow-hidden border-b border-line bg-parchment text-ink">
+      <GateRail variant="header" />
+      <div className="relative z-10 wrap flex min-h-[clamp(4.75rem,11vw,7.5rem)] items-center gap-3 py-4 lg:gap-5 lg:py-5">
         <Link
           href="/"
           className="flex shrink-0 items-center"
@@ -76,7 +38,7 @@ export function Header() {
             alt="BSBI Synagogue"
             width={280}
             height={123}
-            className="h-5 w-auto max-w-[5.25rem] object-contain object-left lg:h-6 lg:max-w-[6rem]"
+            className="h-3.5 w-auto max-w-[3.75rem] object-contain object-left lg:h-4 lg:max-w-[4.25rem]"
             priority
           />
         </Link>
@@ -113,21 +75,16 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
-            onPointerDown={() => {
-              ignoreHideUntil.current = Date.now() + 600;
-            }}
-            onClick={toggleMenu}
+            onClick={() => setOpen((value) => !value)}
           >
             {open ? <X className="pointer-events-none size-5" aria-hidden /> : <Menu className="pointer-events-none size-5" aria-hidden />}
           </button>
         </div>
       </div>
 
-      <GateRail />
-
       <nav
         id="mobile-nav"
-        className={`border-t border-line bg-parchment lg:hidden ${open ? "block" : "hidden"}`}
+        className={`relative z-10 border-t border-line/70 lg:hidden ${open ? "block" : "hidden"}`}
         aria-label="Mobile"
       >
         <div className="wrap flex flex-col gap-1 py-3">
@@ -145,7 +102,6 @@ export function Header() {
             Donate
           </Link>
         </div>
-        <GateRail variant="divider" />
       </nav>
     </header>
   );

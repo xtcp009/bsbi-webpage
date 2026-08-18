@@ -38,12 +38,29 @@ export type LiveEruv = {
   source: "shulcloud";
 };
 
+export type HeroSlide = {
+  src: string;
+  alt: string;
+};
+
+export const FALLBACK_HERO_SLIDES: HeroSlide[] = [
+  {
+    src: "https://images.shulcloud.com/1505/uploads/Files/Image-Links/BSBI.jpg",
+    alt: "Brith Sholom Beth Israel Synagogue on Rutledge Avenue",
+  },
+  {
+    src: "https://images.shulcloud.com/1505/uploads/bsbibrithshalombethisraelsynagoguecharlestonscbystevenhyatt-2.jpg",
+    alt: "Brith Sholom Beth Israel Synagogue in Charleston, photographed by Steven Hyatt",
+  },
+];
+
 export type ShulcloudSnapshot = {
   ok: boolean;
   fetchedAt: string;
   sourceUrl: string;
   calendarUrl: string;
   error?: string;
+  slides: HeroSlide[];
   today: NamedTime[];
   fridayNight: NamedTime[];
   shabbatDay: NamedTime[];
@@ -82,6 +99,7 @@ function emptySnapshot(partial: Partial<ShulcloudSnapshot> = {}): ShulcloudSnaps
     fetchedAt: new Date().toISOString(),
     sourceUrl: ORIGINS[0],
     calendarUrl: `${site.shulcloudPublicUrl}/calendar`,
+    slides: [],
     today: [],
     fridayNight: [],
     shabbatDay: [],
@@ -242,6 +260,28 @@ function parseDateHeading(raw: string) {
   };
 }
 
+function altForHeroSlide(src: string, index: number) {
+  if (/stevenhyatt/i.test(src)) {
+    return "Brith Sholom Beth Israel Synagogue in Charleston, photographed by Steven Hyatt";
+  }
+  if (/Image-Links\/BSBI|\/BSBI\.jpg/i.test(src)) {
+    return "Brith Sholom Beth Israel Synagogue on Rutledge Avenue";
+  }
+  return `Congregation photograph ${index + 1}`;
+}
+
+export function parseHeroSlides(html: string): HeroSlide[] {
+  const slides: HeroSlide[] = [];
+  const re = /<li[^>]*class="[^"]*sy-slide[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]+)"/gi;
+  for (const match of html.matchAll(re)) {
+    const src = decode(match[1].trim());
+    if (!src || slides.some((slide) => slide.src === src)) continue;
+    if (!/^https:\/\/images\.shulcloud\.com\/1505\//i.test(src)) continue;
+    slides.push({ src, alt: altForHeroSlide(src, slides.length) });
+  }
+  return slides;
+}
+
 function hrefFrom(html: string) {
   const match = html.match(/href="((?:https?:\/\/[^"]+)?\/event\/[^"]+)"/i);
   if (!match) return undefined;
@@ -318,6 +358,7 @@ export function parseShulcloudPages(homeHtml: string, calendarHtml: string): Omi
   const holidayWhen = cellAfterClass(homeHtml, "right_calendar_next_holiday");
 
   return {
+    slides: parseHeroSlides(homeHtml),
     today,
     fridayNight: extractWidgetTimes(sliceHeading(homeHtml, "Friday Night", "Shabbat Day")),
     shabbatDay: extractWidgetTimes(sliceHeading(homeHtml, "Shabbat Day")),

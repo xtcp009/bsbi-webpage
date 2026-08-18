@@ -8,11 +8,12 @@ import AnimatedContent from "@/components/react-bits/animated-content";
 import BlurText from "@/components/react-bits/blur-text";
 import FadeContent from "@/components/react-bits/fade-content";
 import ScrollReveal from "@/components/react-bits/scroll-reveal";
+import { HeroSlideshow } from "@/components/hero-slideshow";
 import { ScaledImage } from "@/components/scaled-image";
 import { SourceNote } from "@/components/source-note";
 import { copy } from "@/content/copy";
 import { calendarEntryToEvent } from "@/lib/events";
-import { getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
+import { FALLBACK_HERO_SLIDES, getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
 import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -31,20 +32,7 @@ export default async function HomePage() {
   return (
     <>
       <section>
-        <figure>
-          <ScaledImage
-            src="/images/exterior-facade.jpg"
-            alt="Brith Sholom Beth Israel Synagogue on Rutledge Avenue"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 64rem"
-            className="object-contain object-center"
-            frameClassName="mx-auto w-full max-w-5xl bg-parchment aspect-[4/3] max-h-[min(20rem,46vh)] sm:max-h-[min(24rem,48vh)] lg:max-h-[min(26rem,44vh)]"
-          />
-          <figcaption className="museum-caption wrap pt-4">
-            Brith Sholom Beth Israel · 182 Rutledge Avenue · Charleston, South Carolina
-          </figcaption>
-        </figure>
+        <HeroSlideshow slides={live.slides.length ? live.slides : FALLBACK_HERO_SLIDES} />
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
           <BlurText
             text="Brith Sholom Beth Israel"

@@ -7,9 +7,9 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line bg-parchment text-ink">
-      <GateRail />
-      <div className="wrap grid min-w-0 gap-10 py-12 md:grid-cols-3 md:gap-12 md:py-16">
+    <footer className="site-chrome relative overflow-hidden border-t border-line bg-parchment text-ink">
+      <GateRail variant="footer" />
+      <div className="relative z-10 wrap grid min-w-0 gap-10 py-12 md:grid-cols-3 md:gap-12 md:py-16">
         <div className="min-w-0">
           <Link href="/" className="display text-2xl text-charleston">
             {site.legalName}
@@ -55,7 +55,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-line px-[var(--page-pad)] py-5 text-center text-sm text-muted">
+      <div className="relative z-10 border-t border-line px-[var(--page-pad)] py-5 text-center text-sm text-muted">
         © {year} {site.legalName}. Building photographs via Wikimedia Commons and the Library of Congress Historic
         American Buildings Survey.
       </div>
