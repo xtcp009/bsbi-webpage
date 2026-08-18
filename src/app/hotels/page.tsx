@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Hotels",
-  description: copy.visitBody,
-  alternates: { canonical: `${site.url}/hotels` },
-};
+export const metadata: Metadata = pageMeta(pages.hotels.title, pages.hotels.description, pages.hotels.path);
 
 const hotels = [
   { name: "Hampton Inn Charleston – Historic District", dist: "0.7 mile from shul", addr: "345 Meeting Street", phone: "(843) 723-4000", note: "Congregation rate available; confirm before booking.", eruv: true },
@@ -36,7 +33,7 @@ export default function HotelsPage() {
               <span aria-hidden> · </span>
               {hotel.eruv ? "Inside the eruv" : "Outside the eruv"}
             </p>
-            <a className="text-link mt-2 inline-block text-sm" href={`tel:${hotel.phone.replace(/\D/g, "")}`}>
+            <a className="text-link mt-2 inline-block text-sm" href={`tel:+1${hotel.phone.replace(/\D/g, "")}`}>
               {hotel.phone}
             </a>
             {hotel.note ? <p className="mt-2 text-sm text-muted">{hotel.note}</p> : null}
@@ -47,7 +44,11 @@ export default function HotelsPage() {
           <a className="text-link" href="/eruv">
             Eruv
           </a>{" "}
-          page. Synagogue: {site.phoneDisplay}.
+          page. Synagogue:{" "}
+          <a className="text-link" href={site.phoneHref}>
+            {site.phoneDisplay}
+          </a>
+          .
         </p>
       </div>
     </>

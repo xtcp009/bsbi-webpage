@@ -42,8 +42,14 @@ export function ActionLink({
       </Link>
     );
   }
+
+  const web = /^https?:/i.test(href);
   return (
-    <a href={href} className={styles}>
+    <a
+      href={href}
+      className={styles}
+      {...(web ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </a>
   );

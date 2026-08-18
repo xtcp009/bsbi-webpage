@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Privacy",
-  description: "How BSBI handles visitor information.",
-  alternates: { canonical: `${site.url}/privacy` },
-};
+export const metadata: Metadata = pageMeta(pages.privacy.title, pages.privacy.description, pages.privacy.path);
 
 export default function PrivacyPage() {
   return (
@@ -25,7 +22,15 @@ export default function PrivacyPage() {
           Member billing still uses the congregation&apos;s existing payment portal. That portal has its own terms.
         </p>
         <p>
-          Questions: {site.phoneDisplay} or {site.email}.
+          Questions:{" "}
+          <a className="text-link" href={site.phoneHref}>
+            {site.phoneDisplay}
+          </a>{" "}
+          or{" "}
+          <a className="text-link break-all" href={`mailto:${site.email}`}>
+            {site.email}
+          </a>
+          .
         </p>
       </div>
     </>

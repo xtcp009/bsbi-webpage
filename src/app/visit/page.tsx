@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/more-info";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Visit Charleston",
-  description: copy.visitBody,
-  alternates: { canonical: `${site.url}/visit` },
-};
+export const metadata: Metadata = pageMeta(pages.visit.title, pages.visit.description, pages.visit.path);
 
 export default function VisitPage() {
   return (
@@ -36,12 +33,24 @@ export default function VisitPage() {
             <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.shabbosHouse}</p>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">{copy.shabbosHouseDetails}</p>
             <p className="mt-3 max-w-2xl text-base leading-relaxed">{copy.shabbosHouseReserve}</p>
+            <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <ActionLink href="mailto:khmgmt@bsbisynagogue.org">khmgmt@bsbisynagogue.org</ActionLink>
+              <ActionLink href={site.staff.rebbetzin.phoneHref} variant="ghost">
+                {site.staff.rebbetzin.phone}
+              </ActionLink>
+            </div>
           </section>
 
           <section className="border-t border-line pt-10">
             <h2 className="display text-2xl">Kosher meals to go</h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.chefLinda}</p>
-            <p className="mt-2 text-base text-muted">{copy.chefLindaContact}</p>
+            <p className="mt-2 text-base text-muted">
+              For more information, call{" "}
+              <a className="text-link" href="tel:+18438189227">
+                (843) 818-9227
+              </a>{" "}
+              · Chef Linda Lieberman
+            </p>
             <p className="mt-5">
               <ActionLink href="/kosher" variant="ghost">
                 Kosher in Charleston

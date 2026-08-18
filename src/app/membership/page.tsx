@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { ScaledImage } from "@/components/scaled-image";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Membership",
-  description: copy.membershipLead,
-  alternates: { canonical: `${site.url}/membership` },
-};
+export const metadata: Metadata = pageMeta(pages.membership.title, pages.membership.description, pages.membership.path);
 
 export default function MembershipPage() {
   return (

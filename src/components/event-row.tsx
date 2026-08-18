@@ -5,8 +5,16 @@ import { eventDateParts } from "@/lib/events";
 type EventRowItem = Pick<SiteEvent, "title" | "detail" | "when" | "href"> &
   Partial<Pick<SiteEvent, "startDate" | "recurring">>;
 
+function isInternal(href: string) {
+  return href.startsWith("/") && !href.startsWith("//");
+}
+
 export function EventRow({ event }: { event: EventRowItem }) {
-  const parts = eventDateParts(event);
+  const parts = eventDateParts({
+    when: event.when,
+    startDate: event.startDate,
+    recurring: event.recurring,
+  });
   const inner = (
     <>
       <div className="pt-0.5 text-sm leading-tight text-muted">
@@ -28,12 +36,22 @@ export function EventRow({ event }: { event: EventRowItem }) {
     </>
   );
 
-  if (event.href) {
+  if (event.href && isInternal(event.href)) {
     return (
       <li>
         <Link href={event.href} className="event-row">
           {inner}
         </Link>
+      </li>
+    );
+  }
+
+  if (event.href) {
+    return (
+      <li>
+        <a href={event.href} className="event-row">
+          {inner}
+        </a>
       </li>
     );
   }
@@ -46,7 +64,7 @@ export function EventList({ events }: { events: readonly EventRowItem[] }) {
   return (
     <ul>
       {events.map((event) => (
-        <EventRow key={`${event.title}-${event.when}`} event={event} />
+        <EventRow key={`${event.title}-${event.when}-${event.startDate ?? ""}`} event={event} />
       ))}
     </ul>
   );

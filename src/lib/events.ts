@@ -1,5 +1,7 @@
 import type { SiteEvent } from "@/content/copy";
 import { ymdInCharleston } from "@/lib/format";
+import type { CalendarEntry } from "@/lib/shulcloud";
+import { site } from "@/lib/site";
 
 export function upcomingEvents(list: readonly SiteEvent[], now = new Date()): SiteEvent[] {
   const today = ymdInCharleston(now);
@@ -28,4 +30,14 @@ export function eventDateParts(event: Pick<SiteEvent, "when" | "startDate" | "re
   if (when.includes("saturday") || when.includes("shabbat")) return { month: "SAT", day: "" };
   if (when.includes("sunday")) return { month: "SUN", day: "" };
   return { month: "", day: "" };
+}
+
+export function calendarEntryToEvent(entry: CalendarEntry): SiteEvent {
+  return {
+    title: entry.name,
+    detail: [entry.location, entry.description].filter(Boolean).join(" · "),
+    when: [entry.time, entry.endTime].filter(Boolean).join("–") || entry.weekday,
+    href: entry.href || site.shulcloudPublicUrl + "/calendar",
+    startDate: entry.date || undefined,
+  };
 }

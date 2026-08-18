@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { ScaledImage } from "@/components/scaled-image";
 import { gallery } from "@/content/gallery";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Photo Gallery",
-  description: "Photographs of Brith Sholom Beth Israel Synagogue in Charleston, and Historic American Buildings Survey records.",
-  alternates: { canonical: `${site.url}/gallery` },
-};
+export const metadata: Metadata = pageMeta(pages.gallery.title, pages.gallery.description, pages.gallery.path);
 
 export default function GalleryPage() {
   return (

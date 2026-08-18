@@ -1,20 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { EruvBanner } from "@/components/eruv-banner";
 import { EventList } from "@/components/event-row";
 import { NextMinyan } from "@/components/next-minyan";
 import { ActionLink } from "@/components/page-hero";
+import FadeContent from "@/components/react-bits/fade-content";
 import { ScaledImage } from "@/components/scaled-image";
-import { copy, events } from "@/content/copy";
-import { upcomingEvents } from "@/lib/events";
+import { SourceNote } from "@/components/source-note";
+import { copy } from "@/content/copy";
+import { calendarEntryToEvent } from "@/lib/events";
+import { getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { buildDayBoard, getShabbatInfo, getZmanim } from "@/lib/zmanim";
 
-export const revalidate = 3600;
+export const metadata: Metadata = {
+  ...pageMeta(pages.home.title, pages.home.description, pages.home.path),
+  title: { absolute: pages.home.title },
+};
+
+export const revalidate = 120;
 
 export default async function HomePage() {
-  const [zmanim, shabbat] = await Promise.all([getZmanim(), getShabbatInfo()]);
-  const board = zmanim ? buildDayBoard(zmanim, shabbat) : null;
-  const upcoming = upcomingEvents(events);
+  const live = await getShulcloudSnapshot();
+  const board = snapshotToBoard(live);
+  const upcoming = live.events.map(calendarEntryToEvent);
 
   return (
     <>
@@ -26,29 +35,32 @@ export default async function HomePage() {
             fill
             priority
             sizes="100vw"
-            className="historic-image object-cover object-[center_42%]"
-            frameClassName="w-full aspect-[5/4] sm:aspect-[2.15/1] lg:aspect-[2.6/1]"
+            className="object-cover object-[center_58%] lg:object-[center_50%]"
+            frameClassName="w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9]"
           />
           <figcaption className="museum-caption wrap pt-4">
             Brith Sholom Beth Israel · 182 Rutledge Avenue · Charleston, South Carolina
           </figcaption>
         </figure>
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
-          <h1 className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston">
-            Brith Sholom Beth Israel
-          </h1>
-          <p className="lede mt-6 text-muted">{copy.homeTagline}</p>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-            <ActionLink href="/times">Today&apos;s Services</ActionLink>
-            <ActionLink href="/visit" variant="secondary">
-              Plan a Visit
-            </ActionLink>
-          </div>
+          <FadeContent>
+            <h1 className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston">
+              Brith Sholom Beth Israel
+            </h1>
+            <p className="lede mt-6 text-muted">{copy.homeTagline}</p>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+              <ActionLink href="/times">Today&apos;s Services</ActionLink>
+              <ActionLink href="/visit" variant="secondary">
+                Plan a Visit
+              </ActionLink>
+            </div>
+          </FadeContent>
         </div>
       </section>
 
       <section className="border-t border-line">
-        <div className="wrap grid gap-12 py-12 lg:grid-cols-12 lg:gap-16 lg:py-20">
+        <FadeContent>
+          <div className="wrap grid gap-12 py-12 lg:grid-cols-12 lg:gap-16 lg:py-20">
           <div className="lg:col-span-7">
             {board ? (
               <NextMinyan board={board} />
@@ -65,29 +77,49 @@ export default async function HomePage() {
             )}
           </div>
           <div className="flex flex-col gap-10 border-t border-line pt-10 lg:col-span-5 lg:border-t-0 lg:pt-0">
-            {shabbat.parsha || shabbat.candleLighting ? (
+            {live.parsha || live.candleLighting || live.fridayNight.length > 0 ? (
               <div>
                 <p className="kicker">This Shabbat</p>
-                {shabbat.parsha ? (
-                  <p className="display mt-3 text-3xl text-charleston">Parshat {shabbat.parsha}</p>
+                {live.parsha ? (
+                  <p className="display mt-3 text-3xl text-charleston">{live.parsha.startsWith("Parshat") ? live.parsha : `Parshat ${live.parsha}`}</p>
                 ) : null}
                 <p className="mt-3 text-base text-muted">
-                  {shabbat.candleLighting ? `Candle lighting ${shabbat.candleLighting}` : null}
-                  {shabbat.candleLighting && shabbat.havdalah ? (
+                  {live.candleLighting ? `Candle lighting ${live.candleLighting}` : null}
+                  {live.candleLighting && live.havdalah ? (
                     <>
                       <br />
                     </>
                   ) : null}
-                  {shabbat.havdalah ? `Havdalah ${shabbat.havdalah}` : null}
+                  {live.havdalah ? `Havdalah ${live.havdalah}` : null}
                 </p>
+                {live.nextHoliday ? (
+                  <p className="mt-2 text-sm text-muted">
+                    {live.nextHoliday.name}
+                    <span aria-hidden> · </span>
+                    {live.nextHoliday.when}
+                  </p>
+                ) : null}
+                {live.fridayNight.length > 0 ? (
+                  <ul className="mt-4 flex max-w-sm flex-col gap-1 text-base text-muted">
+                    {live.fridayNight.map((item) => (
+                      <li key={item.name} className="flex justify-between gap-4">
+                        <span>{item.name}</span>
+                        <span className="tabular-nums">{item.time}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             ) : null}
-            <EruvBanner compact />
+            <EruvBanner compact live={live.eruv} />
+            <SourceNote ok={live.ok} fetchedAt={live.fetchedAt} sourceUrl={live.sourceUrl} next="/" />
           </div>
-        </div>
+          </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap grid items-start gap-10 py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
           <div className="lg:col-span-5 lg:pt-4">
             <h2 className="display text-3xl text-charleston sm:text-4xl">{copy.welcomeClose}</h2>
@@ -104,29 +136,43 @@ export default async function HomePage() {
               alt="Entrance of Brith Sholom Beth Israel Synagogue"
               fill
               sizes="(max-width: 1024px) 100vw, 55vw"
-              className="historic-image object-cover object-center"
+              className="object-cover object-center"
               frameClassName="aspect-[4/3] w-full"
             />
             <figcaption className="museum-caption">Main entrance, 182 Rutledge Avenue</figcaption>
           </figure>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap py-14 lg:py-20">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <h2 className="display text-3xl text-charleston">Upcoming events</h2>
-            <Link href="/calendar" className="text-link">
-              Calendar
-            </Link>
+            <a className="text-link" href={live.calendarUrl}>
+              ShulCloud calendar
+            </a>
           </div>
           <div className="mt-8 max-w-3xl">
-            <EventList events={upcoming} />
+            {upcoming.length > 0 ? (
+              <EventList events={upcoming} />
+            ) : (
+              <p className="text-base text-muted">
+                No upcoming programs were listed on ShulCloud beyond regular services.{" "}
+                <Link href="/calendar" className="text-link">
+                  See the week&apos;s times
+                </Link>
+                .
+              </p>
+            )}
           </div>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap py-16 lg:py-24">
           <figure>
             <ScaledImage
@@ -134,7 +180,7 @@ export default async function HomePage() {
               alt="Central double-pass gate by Sabel Iron Works, Historic American Buildings Survey"
               fill
               sizes="100vw"
-              className="historic-image object-cover object-center"
+              className="object-cover object-center"
               frameClassName="aspect-[5/4] w-full sm:aspect-[16/9]"
             />
             <figcaption className="museum-caption">
@@ -146,9 +192,11 @@ export default async function HomePage() {
             </figcaption>
           </figure>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap grid gap-12 py-16 lg:grid-cols-12 lg:py-24">
           <div className="lg:col-span-5">
             <h2 className="display text-3xl text-charleston sm:text-4xl">Our story</h2>
@@ -177,9 +225,11 @@ export default async function HomePage() {
             </li>
           </ol>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap grid items-start gap-10 py-16 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-5">
             <h2 className="display text-3xl text-charleston">Congregation life</h2>
@@ -211,13 +261,17 @@ export default async function HomePage() {
             />
           </div>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap grid gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-20">
           <div>
             <p className="kicker">Downtown</p>
-            <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">{site.locations.downtown.fullAddress}</h2>
+            <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">
+              <a href={site.locations.downtown.googleMaps}>{site.locations.downtown.fullAddress}</a>
+            </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">{copy.downtownLocation}</p>
             <p className="mt-5">
               <a className="text-link" href={site.locations.downtown.googleMaps}>
@@ -231,7 +285,9 @@ export default async function HomePage() {
           </div>
           <div>
             <p className="kicker">South Windermere</p>
-            <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">{site.locations.minyanHouse.fullAddress}</h2>
+            <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">
+              <a href={site.locations.minyanHouse.googleMaps}>{site.locations.minyanHouse.fullAddress}</a>
+            </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">{copy.minyanHouse}</p>
             <p className="mt-5">
               <a className="text-link" href={site.locations.minyanHouse.googleMaps}>
@@ -240,9 +296,11 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
+        </FadeContent>
       </section>
 
       <section className="border-t border-line">
+        <FadeContent>
         <div className="wrap grid items-start gap-10 py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
           <figure className="lg:col-span-5">
             <ScaledImage
@@ -267,6 +325,7 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
+        </FadeContent>
       </section>
     </>
   );

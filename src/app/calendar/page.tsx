@@ -1,59 +1,79 @@
 import type { Metadata } from "next";
 import { EventList } from "@/components/event-row";
 import { PageHero } from "@/components/page-hero";
-import { events } from "@/content/copy";
-import { upcomingEvents } from "@/lib/events";
-import { formatShortDate } from "@/lib/format";
-import { site } from "@/lib/site";
-import { getUpcomingCalendar } from "@/lib/zmanim";
+import { SourceNote } from "@/components/source-note";
+import { calendarEntryToEvent } from "@/lib/events";
+import { ymdInCharleston } from "@/lib/format";
+import { pageMeta, pages } from "@/lib/seo";
+import { getShulcloudSnapshot } from "@/lib/shulcloud";
 
-export const metadata: Metadata = {
-  title: "Calendar",
-  description: "Upcoming programs and events at BSBI Synagogue in Charleston.",
-  alternates: { canonical: `${site.url}/calendar` },
-};
+export const metadata: Metadata = pageMeta(pages.calendar.title, pages.calendar.description, pages.calendar.path);
 
-export const revalidate = 3600;
+export const revalidate = 120;
 
 export default async function CalendarPage() {
-  const items = await getUpcomingCalendar();
-  const upcoming = upcomingEvents(events);
+  const live = await getShulcloudSnapshot();
+  const upcoming = live.events.map(calendarEntryToEvent);
+  const todayYmd = ymdInCharleston();
+  const week = live.week.filter((day) => day.date >= todayYmd).slice(0, 8);
 
   return (
     <>
       <PageHero
         title="Calendar"
-        lede="Weekly classes at the synagogue, and the Hebrew calendar for the weeks ahead."
+        lede="Times and programs as they appear on the synagogue’s ShulCloud calendar."
       />
       <div className="wrap-narrow section">
-        <h2 className="display text-2xl text-charleston">Weekly at BSBI</h2>
+        <h2 className="display text-2xl text-charleston">Upcoming programs</h2>
         <div className="mt-6">
-          <EventList events={upcoming} />
+          {upcoming.length > 0 ? (
+            <EventList events={upcoming} />
+          ) : (
+            <p className="text-base text-muted">
+              No separate programs are currently listed beyond daily services. Registration, when offered, is on the
+              ShulCloud event page.
+            </p>
+          )}
         </div>
-        <h2 className="display mt-14 text-2xl text-charleston">This season</h2>
-        {items.length > 0 ? (
-          <ul className="mt-6">
-            {items.map((item) => {
-              const day = new Date(`${item.date.slice(0, 10)}T12:00:00`);
-              return (
-                <li key={`${item.date}-${item.title}`} className="event-row">
-                  <div className="pt-0.5 text-sm leading-tight text-muted">
-                    <span className="block font-medium tracking-wide">
-                      {day.toLocaleString("en-US", { month: "short" }).toUpperCase()}
-                    </span>
-                    <span className="display mt-0.5 block text-2xl text-charleston">{day.getDate()}</span>
-                  </div>
-                  <div>
-                    <p className="display text-xl text-charleston">{item.title}</p>
-                    <p className="mt-1 text-base text-muted">{formatShortDate(item.date)}</p>
-                  </div>
+
+        {week.length > 0 ? (
+          <>
+            <h2 className="display mt-14 text-2xl text-charleston">This week&apos;s services</h2>
+            <ul className="mt-6">
+              {week.map((day) => (
+                <li key={day.date} className="border-t border-line py-5">
+                  <p className="display text-xl text-charleston">{day.label}</p>
+                  {day.hebrew ? <p className="mt-1 text-sm text-muted">{day.hebrew}</p> : null}
+                  <ul className="mt-3 flex flex-col gap-2 text-base">
+                    {day.items.map((item) => (
+                      <li key={`${item.name}-${item.time}`} className="flex items-baseline justify-between gap-3">
+                        <span>
+                          {item.href ? (
+                            <a className="text-link" href={item.href}>
+                              {item.name}
+                            </a>
+                          ) : (
+                            item.name
+                          )}
+                        </span>
+                        <span className="shrink-0 tabular-nums">{item.time}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="mt-4 text-base text-muted">Call {site.phoneDisplay} for the week&apos;s schedule.</p>
-        )}
+              ))}
+            </ul>
+          </>
+        ) : null}
+
+        <SourceNote ok={live.ok} fetchedAt={live.fetchedAt} sourceUrl={live.calendarUrl} next="/calendar" />
+        <p className="mt-3 text-sm text-muted">
+          Event registration stays on ShulCloud.{" "}
+          <a className="text-link" href={live.calendarUrl}>
+            Open the live calendar
+          </a>
+          .
+        </p>
       </div>
     </>
   );

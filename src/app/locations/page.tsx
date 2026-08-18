@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/more-info";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Locations",
-  description: copy.downtownLocation,
-  alternates: { canonical: `${site.url}/locations` },
-};
+export const metadata: Metadata = pageMeta(pages.locations.title, pages.locations.description, pages.locations.path);
 
 export default function LocationsPage() {
   const { downtown, minyanHouse } = site.locations;
@@ -76,7 +73,11 @@ function Place({
     <section className="flex flex-col gap-4">
       <div>
         <h2 className="display text-2xl sm:text-3xl">{title}</h2>
-        <p className="mt-2 text-lg">{address}</p>
+        <p className="mt-2 text-lg">
+          <a className="text-link" href={google}>
+            {address}
+          </a>
+        </p>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">{body}</p>
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
           <ActionLink href={google}>Google Maps</ActionLink>

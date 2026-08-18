@@ -63,41 +63,41 @@ export function Header() {
         hidden && !open ? "-translate-y-full lg:translate-y-0" : "translate-y-0"
       }`}
     >
-      <div className="wrap flex items-center justify-between gap-4 py-3 lg:py-3.5">
-        <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
+      <div className="wrap flex items-center gap-3 py-2 lg:gap-6 lg:py-2">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center"
+          aria-label={`${site.name} home`}
+          onClick={() => setOpen(false)}
+        >
           <Image
             src="/images/logo.png"
             alt="BSBI Synagogue"
             width={280}
             height={123}
-            className="h-10 w-auto max-w-[8.5rem] object-contain sm:h-12 sm:max-w-[11.5rem]"
+            className="h-7 w-auto max-w-[6.75rem] object-contain object-left lg:h-8 lg:max-w-[7.5rem]"
             priority
           />
-          <span className="hidden min-[520px]:block text-sm leading-tight text-cream/75 lg:hidden 2xl:block">
-            Charleston, SC
-            <span className="block text-cream">Est. 1854</span>
-          </span>
         </Link>
 
-        <nav className="hidden items-center lg:flex" aria-label="Primary">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center lg:flex" aria-label="Primary">
           {nav.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link px-2.5 py-2 text-[0.95rem] xl:px-3.5 ${
-                  active ? "text-cream underline decoration-gold/80 underline-offset-8" : "text-cream/80 hover:text-cream"
+                className={`nav-link px-3 py-2 text-lg xl:px-4 xl:text-xl ${
+                  active ? "is-active text-cream" : "text-cream/80"
                 }`}
               >
-                <span className="2xl:hidden">{item.short}</span>
-                <span className="hidden 2xl:inline">{item.label}</span>
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="relative z-50 flex shrink-0 items-center gap-3">
+        <div className="relative z-50 ml-auto flex shrink-0 items-center gap-3">
           <a
             href={site.phoneHref}
             className="inline-flex min-h-11 items-center gap-2 border border-cream/35 px-3 py-2 text-sm text-cream sm:min-h-12 sm:px-3.5"

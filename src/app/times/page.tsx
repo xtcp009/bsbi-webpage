@@ -3,110 +3,123 @@ import { EruvBanner } from "@/components/eruv-banner";
 import { PageShell } from "@/components/more-info";
 import { NextMinyan } from "@/components/next-minyan";
 import { PageHero } from "@/components/page-hero";
+import { SourceNote } from "@/components/source-note";
 import { copy } from "@/content/copy";
-import { formatTime } from "@/lib/format";
+import { formatTime, ymdInCharleston } from "@/lib/format";
+import { pageMeta, pages } from "@/lib/seo";
+import { getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
 import { site } from "@/lib/site";
-import {
-  buildDayBoard,
-  getShabbatInfo,
-  getWeekZmanim,
-  getZmanim,
-  zmanimRows,
-  type DayBoard,
-} from "@/lib/zmanim";
+import { getZmanim, zmanimRows, type ZmanimTimes } from "@/lib/zmanim";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description: copy.dailyServices,
-  alternates: { canonical: `${site.url}/times` },
-};
+export const metadata: Metadata = pageMeta(pages.times.title, pages.times.description, pages.times.path);
 
-export const revalidate = 1800;
+export const revalidate = 120;
 
 export default async function TimesPage() {
-  const [today, week, shabbat] = await Promise.all([getZmanim(), getWeekZmanim(), getShabbatInfo()]);
-  const todayBoard = today ? buildDayBoard(today, shabbat) : null;
-  const weekBoards = week.map((day) => buildDayBoard(day, shabbat));
+  const [live, todayZmanim] = await Promise.all([getShulcloudSnapshot(), getZmanim()]);
+  const todayBoard = snapshotToBoard(live);
+  const todayYmd = ymdInCharleston();
+  const week = live.week.filter((day) => day.date >= todayYmd).slice(0, 7);
 
   return (
     <>
       <PageHero title="Services" lede={copy.dailyServices} />
       <PageShell>
         <div className="flex flex-col gap-14">
-          {todayBoard ? <NextMinyan board={todayBoard} /> : null}
+          {todayBoard ? (
+            <NextMinyan board={todayBoard} />
+          ) : live.today.length > 0 ? (
+            <section>
+              <p className="kicker">Today</p>
+              <ul className="mt-4 max-w-md">
+                {live.today.map((item) => (
+                  <li key={item.name} className="flex items-baseline justify-between gap-4 border-t border-line py-3">
+                    <span>{item.name}</span>
+                    <span className="display text-2xl tabular-nums">{item.time}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : (
+            <p className="text-base text-muted">
+              Today&apos;s service times could not be loaded from ShulCloud. See the{" "}
+              <a className="text-link" href={site.shulcloudPublicUrl}>
+                current synagogue website
+              </a>
+              .
+            </p>
+          )}
 
-          <section className="border-t border-line pt-10">
-            <h2 className="display text-2xl">Schedule</h2>
-            <p className="mt-3 max-w-2xl text-base text-muted">{copy.doorsOpen}</p>
-            <div className="mt-6 overflow-x-auto">
-              <table className="w-full min-w-[32rem] text-left text-base">
-                <thead className="border-b border-line text-sm text-muted">
-                  <tr>
-                    <th className="py-3.5 pr-4 font-medium">Day</th>
-                    <th className="py-3.5 pr-4 font-medium">Shacharit</th>
-                    <th className="py-3.5 pr-4 font-medium">Mincha / Maariv</th>
-                    <th className="py-3.5 font-medium">Where</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-line">
-                    <td className="py-3.5 pr-4 font-medium">Sunday</td>
-                    <td className="py-3.5 pr-4 tabular-nums">8:00 AM</td>
-                    <td className="py-3.5 pr-4">About 15 minutes before sunset</td>
-                    <td className="py-3.5">Downtown</td>
-                  </tr>
-                  <tr className="border-t border-line">
-                    <td className="py-3.5 pr-4 font-medium">Monday–Friday</td>
-                    <td className="py-3.5 pr-4 tabular-nums">7:00 AM</td>
-                    <td className="py-3.5 pr-4">Moves with sunset</td>
-                    <td className="py-3.5">Downtown</td>
-                  </tr>
-                  <tr className="border-t border-line">
-                    <td className="py-3.5 pr-4 font-medium">Friday night</td>
-                    <td className="py-3.5 pr-4">7:00 AM Shacharit</td>
-                    <td className="py-3.5 pr-4">Mincha / Kabbalat Shabbat</td>
-                    <td className="py-3.5">Downtown and Minyan House</td>
-                  </tr>
-                  <tr className="border-t border-line">
-                    <td className="py-3.5 pr-4 font-medium">Shabbat</td>
-                    <td className="py-3.5 pr-4 tabular-nums">9:00 AM</td>
-                    <td className="py-3.5 pr-4">Mincha ~45 minutes before sunset, then Maariv / Havdalah</td>
-                    <td className="py-3.5">Both locations</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section className="border-t border-line pt-10">
-            <h2 className="display text-2xl">This week</h2>
-            <div className="mt-2">
-              {weekBoards.map((day) => (
-                <DayRow key={day.date} day={day} highlight={day.date === todayBoard?.date} />
-              ))}
-            </div>
-          </section>
-
-          {today ? (
+          {live.fridayNight.length > 0 || live.shabbatDay.length > 0 ? (
             <section className="border-t border-line pt-10">
-              <h2 className="display text-2xl">Zmanim</h2>
-              <dl className="mt-2">
-                {zmanimRows.map((row) => {
-                  const value = today[row.key];
-                  if (!value) return null;
-                  return (
-                    <div key={row.key} className="flex items-baseline justify-between gap-4 border-t border-line py-3">
-                      <dt className="text-base text-muted">{row.label}</dt>
-                      <dd className="text-lg font-medium tabular-nums">{formatTime(value)}</dd>
-                    </div>
-                  );
-                })}
-              </dl>
+              <h2 className="display text-2xl">This Shabbat</h2>
+              {live.parsha ? <p className="mt-3 text-lg">{live.parsha.startsWith("Parshat") ? live.parsha : `Parshat ${live.parsha}`}</p> : null}
+              {live.nextHoliday ? (
+                <p className="mt-2 text-sm text-muted">
+                  Next: {live.nextHoliday.name} · {live.nextHoliday.when}
+                </p>
+              ) : null}
+              <div className="mt-6 grid gap-8 sm:grid-cols-2">
+                <div>
+                  <h3 className="display text-xl">Friday night</h3>
+                  <ul className="mt-3">
+                    {live.fridayNight.map((item) => (
+                      <li key={item.name} className="flex justify-between gap-4 border-t border-line py-2">
+                        <span>{item.name}</span>
+                        <span className="tabular-nums">{item.time}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="display text-xl">Shabbat day</h3>
+                  <ul className="mt-3">
+                    {live.shabbatDay.map((item) => (
+                      <li key={item.name} className="flex justify-between gap-4 border-t border-line py-2">
+                        <span>{item.name}</span>
+                        <span className="tabular-nums">{item.time}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </section>
           ) : null}
 
+          {week.length > 0 ? (
+            <section className="border-t border-line pt-10">
+              <h2 className="display text-2xl">This week</h2>
+              <div className="mt-2">
+                {week.map((day) => (
+                  <article
+                    key={day.date}
+                    className={`border-t border-line py-5 ${day.date === todayYmd ? "border-t-2 border-t-gold" : ""}`}
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="display text-xl text-charleston">{day.label}</h3>
+                      {day.hebrew ? <p className="text-sm text-muted">{day.hebrew}</p> : null}
+                    </div>
+                    <ul className="mt-3 flex flex-col gap-2 text-base">
+                      {day.items
+                        .filter((item) => item.service)
+                        .map((item) => (
+                          <li key={`${item.name}-${item.time}`} className="flex items-baseline justify-between gap-3">
+                            <span>{item.name}</span>
+                            <span className="shrink-0 font-medium tabular-nums">{item.time}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <ZmanimBlock live={live.zmanim} fallback={todayZmanim} />
+
           <div className="border-t border-line pt-10">
-            <EruvBanner />
+            <EruvBanner live={live.eruv} />
+            <SourceNote ok={live.ok} fetchedAt={live.fetchedAt} sourceUrl={live.sourceUrl} next="/times" />
           </div>
         </div>
       </PageShell>
@@ -114,21 +127,47 @@ export default async function TimesPage() {
   );
 }
 
-function DayRow({ day, highlight }: { day: DayBoard; highlight: boolean }) {
+function ZmanimBlock({
+  live,
+  fallback,
+}: {
+  live: { label: string; time: string }[];
+  fallback: ZmanimTimes | null;
+}) {
+  if (live.length > 0) {
+    return (
+      <section className="border-t border-line pt-10">
+        <h2 className="display text-2xl">Zmanim</h2>
+        <dl className="mt-2">
+          {live.map((row) => (
+            <div key={row.label} className="flex items-baseline justify-between gap-4 border-t border-line py-3">
+              <dt className="text-base text-muted">{row.label}</dt>
+              <dd className="text-lg font-medium tabular-nums">{row.time}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    );
+  }
+
+  if (!fallback) return null;
+
   return (
-    <article className={`border-t border-line py-5 ${highlight ? "border-t-2 border-t-gold" : ""}`}>
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 className="display text-xl text-charleston">{day.label}</h3>
-        <p className="text-sm text-muted">{day.date}</p>
-      </div>
-      <ul className="mt-3 flex flex-col gap-2 text-base">
-        {day.services.map((service) => (
-          <li key={service.id} className="flex items-baseline justify-between gap-3">
-            <span>{service.name}</span>
-            <span className="shrink-0 font-medium tabular-nums">{service.time}</span>
-          </li>
-        ))}
-      </ul>
-    </article>
+    <section className="border-t border-line pt-10">
+      <h2 className="display text-2xl">Zmanim</h2>
+      <p className="mt-2 text-sm text-muted">Astronomical times for Charleston; service times above come from ShulCloud when available.</p>
+      <dl className="mt-2">
+        {zmanimRows.map((row) => {
+          const value = fallback[row.key];
+          if (!value) return null;
+          return (
+            <div key={row.key} className="flex items-baseline justify-between gap-4 border-t border-line py-3">
+              <dt className="text-base text-muted">{row.label}</dt>
+              <dd className="text-lg font-medium tabular-nums">{formatTime(value)}</dd>
+            </div>
+          );
+        })}
+      </dl>
+    </section>
   );
 }

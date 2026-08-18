@@ -19,6 +19,12 @@ export const site = {
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL || "",
   membershipApplicationUrl:
     "https://images.shulcloud.com/1505/uploads/Files/Membership-and-Dues/BSBImembershipapplication.png",
+  /**
+   * Production DNS still points www to ShulCloud. The Vercel app is a parallel frontend
+   * and must keep reading live public data from this origin — never assume a cutover.
+   */
+  shulcloudOrigin: "https://bsbisynagogue.shulcloud.com",
+  shulcloudPublicUrl: "https://www.bsbisynagogue.org",
   facebook: "https://www.facebook.com/BSBISynagogue/",
   socials: {
     facebook: "https://www.facebook.com/BSBISynagogue/",
@@ -100,15 +106,18 @@ export const nav = [
 export const footerNav = [
   { href: "/times", label: "Services" },
   { href: "/calendar", label: "Calendar" },
-  { href: "/gallery", label: "Photo Gallery" },
-  { href: "/remembrance", label: "Remembrance Wall" },
+  { href: "/visit", label: "Visit" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/locations", label: "Locations" },
   { href: "/eruv", label: "Eruv" },
   { href: "/mikvah", label: "Mikvah" },
-  { href: "/hotels", label: "Hotels" },
-  { href: "/locations", label: "Locations" },
   { href: "/kosher", label: "Kosher" },
-  { href: "/community", label: "Sisterhood" },
+  { href: "/hotels", label: "Hotels" },
+  { href: "/community", label: "Community" },
   { href: "/membership", label: "Membership" },
+  { href: "/remembrance", label: "Remembrance" },
   { href: "/donate", label: "Donate" },
   { href: "/privacy", label: "Privacy" },
 ] as const;

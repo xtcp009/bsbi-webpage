@@ -11,7 +11,7 @@ export default function FadeContent({
   children,
   className = "",
   delay = 0,
-  y = 28,
+  y = 14,
 }: {
   children: ReactNode;
   className?: string;
@@ -25,6 +25,7 @@ export default function FadeContent({
       const el = ref.current;
       if (!el) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
       gsap.fromTo(
         el,
@@ -32,12 +33,12 @@ export default function FadeContent({
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.9,
+          duration: 0.7,
           delay,
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 88%",
+            start: "top 90%",
             once: true,
           },
         },

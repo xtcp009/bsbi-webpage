@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { ScaledImage } from "@/components/scaled-image";
 import { copy, weeklyClasses } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Sisterhood, Brotherhood, and Classes",
-  description: copy.facilities,
-  alternates: { canonical: `${site.url}/community` },
-};
+export const metadata: Metadata = pageMeta(pages.community.title, pages.community.description, pages.community.path);
 
 export default function CommunityPage() {
   return (
@@ -80,7 +77,12 @@ export default function CommunityPage() {
           <h2 className="display text-2xl">Rentals</h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.rentalsSanctuary}</p>
           <p className="mt-3 max-w-2xl text-base leading-relaxed">{copy.rentalsHall}</p>
-          <p className="mt-3 text-base text-muted">Office: {site.phoneDisplay}</p>
+          <p className="mt-3 text-base text-muted">
+            Office:{" "}
+            <a className="text-link" href={site.phoneHref}>
+              {site.phoneDisplay}
+            </a>
+          </p>
         </section>
       </div>
     </>

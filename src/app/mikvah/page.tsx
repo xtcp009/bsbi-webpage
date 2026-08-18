@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/more-info";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Mikvah",
-  description: copy.mikvahLead,
-  alternates: { canonical: `${site.url}/mikvah` },
-};
+export const metadata: Metadata = pageMeta(pages.mikvah.title, pages.mikvah.description, pages.mikvah.path);
 
 export default function MikvahPage() {
   return (

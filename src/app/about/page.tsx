@@ -3,13 +3,10 @@ import { PageShell } from "@/components/more-info";
 import { PageHero } from "@/components/page-hero";
 import { ScaledImage } from "@/components/scaled-image";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: copy.historyLead,
-  alternates: { canonical: `${site.url}/about` },
-};
+export const metadata: Metadata = pageMeta(pages.about.title, pages.about.description, pages.about.path);
 
 export default function AboutPage() {
   return (
@@ -57,6 +54,13 @@ export default function AboutPage() {
               <li>
                 <p className="font-semibold">{site.staff.rebbetzin.name}</p>
                 <p className="text-muted">{site.staff.rebbetzin.title}</p>
+                <a className="text-link" href={site.staff.rebbetzin.phoneHref}>
+                  {site.staff.rebbetzin.phone}
+                </a>
+                <span aria-hidden> · </span>
+                <a className="text-link break-all" href={`mailto:${site.staff.rebbetzin.email}`}>
+                  {site.staff.rebbetzin.email}
+                </a>
               </li>
             </ul>
           </div>

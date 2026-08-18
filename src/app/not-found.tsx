@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ActionLink } from "@/components/page-hero";
+import { pageMeta } from "@/lib/seo";
 import { site } from "@/lib/site";
+
+export const metadata: Metadata = pageMeta("Page not found", "This page is not on the BSBI website.", "/");
 
 export default function NotFound() {
   return (

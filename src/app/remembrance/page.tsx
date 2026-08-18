@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { ActionLink, PageHero } from "@/components/page-hero";
 import { ScaledImage } from "@/components/scaled-image";
 import { copy } from "@/content/copy";
+import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Remembrance Wall",
-  description: `${copy.remembranceWall}. ${copy.remembranceTag}`,
-  alternates: { canonical: `${site.url}/remembrance` },
-};
+export const metadata: Metadata = pageMeta(
+  pages.remembrance.title,
+  pages.remembrance.description,
+  pages.remembrance.path,
+);
 
 export default function RemembrancePage() {
   return (
