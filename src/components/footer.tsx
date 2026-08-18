@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GateRail } from "@/components/gate-rail";
 import { SocialLinks } from "@/components/social-links";
 import { footerNav, site } from "@/lib/site";
 
@@ -6,20 +7,21 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-charleston text-cream">
+    <footer className="border-t border-line bg-parchment text-ink">
+      <GateRail />
       <div className="wrap grid min-w-0 gap-10 py-12 md:grid-cols-3 md:gap-12 md:py-16">
         <div className="min-w-0">
-          <Link href="/" className="display text-2xl text-cream hover:text-cream">
+          <Link href="/" className="display text-2xl text-charleston">
             {site.legalName}
           </Link>
-          <p className="mt-4 max-w-sm text-base leading-relaxed text-cream/70">{site.tagline}</p>
+          <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">{site.tagline}</p>
           <div className="mt-6">
-            <SocialLinks onDark />
+            <SocialLinks />
           </div>
         </div>
         <div className="min-w-0">
-          <p className="text-base text-cream/70">Find us</p>
-          <address className="mt-3 not-italic text-base leading-relaxed text-cream/90">
+          <p className="text-base text-muted">Find us</p>
+          <address className="mt-3 not-italic text-base leading-relaxed">
             <a className="text-link" href={site.locations.downtown.googleMaps}>
               {site.locations.downtown.fullAddress}
             </a>
@@ -32,7 +34,7 @@ export function Footer() {
               {site.email}
             </a>
           </address>
-          <p className="mt-4 text-base text-cream/70">
+          <p className="mt-4 text-base text-muted">
             Friday night and Saturday also at the Minyan House,{" "}
             <a className="text-link" href={site.locations.minyanHouse.googleMaps}>
               {site.locations.minyanHouse.address}
@@ -41,11 +43,11 @@ export function Footer() {
           </p>
         </div>
         <div className="min-w-0">
-          <p className="text-base text-cream/70">On this site</p>
+          <p className="text-base text-muted">On this site</p>
           <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-base">
             {footerNav.map((item) => (
               <li key={item.href}>
-                <Link className="text-cream/80 hover:text-cream" href={item.href}>
+                <Link className="text-ink/80 hover:text-ink" href={item.href}>
                   {item.label}
                 </Link>
               </li>
@@ -53,7 +55,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 px-[var(--page-pad)] py-5 text-center text-sm text-cream/55">
+      <div className="border-t border-line px-[var(--page-pad)] py-5 text-center text-sm text-muted">
         © {year} {site.legalName}. Building photographs via Wikimedia Commons and the Library of Congress Historic
         American Buildings Survey.
       </div>

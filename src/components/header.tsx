@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
+import { GateRail } from "@/components/gate-rail";
 import { nav, site } from "@/lib/site";
 
 export function Header() {
@@ -59,11 +60,11 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-white/10 bg-charleston text-cream transition-transform duration-300 ease-out motion-reduce:transition-none ${
+      className={`sticky top-0 z-50 border-b border-line bg-parchment text-ink transition-transform duration-300 ease-out motion-reduce:transition-none ${
         hidden && !open ? "-translate-y-full lg:translate-y-0" : "translate-y-0"
       }`}
     >
-      <div className="wrap flex items-center gap-3 py-2 lg:gap-6 lg:py-2">
+      <div className="wrap flex items-center gap-3 py-1.5 lg:gap-5 lg:py-1.5">
         <Link
           href="/"
           className="flex shrink-0 items-center"
@@ -71,11 +72,11 @@ export function Header() {
           onClick={() => setOpen(false)}
         >
           <Image
-            src="/images/logo.png"
+            src="/images/logo-ink.png"
             alt="BSBI Synagogue"
             width={280}
             height={123}
-            className="h-7 w-auto max-w-[6.75rem] object-contain object-left lg:h-8 lg:max-w-[7.5rem]"
+            className="h-5 w-auto max-w-[5.25rem] object-contain object-left lg:h-6 lg:max-w-[6rem]"
             priority
           />
         </Link>
@@ -87,8 +88,8 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link px-3 py-2 text-lg xl:px-4 xl:text-xl ${
-                  active ? "is-active text-cream" : "text-cream/80"
+                className={`nav-link px-2.5 py-1.5 text-base xl:px-3.5 xl:text-lg ${
+                  active ? "is-active text-ink" : "text-ink/80"
                 }`}
               >
                 {item.label}
@@ -97,10 +98,10 @@ export function Header() {
           })}
         </nav>
 
-        <div className="relative z-50 ml-auto flex shrink-0 items-center gap-3">
+        <div className="relative z-50 ml-auto flex shrink-0 items-center gap-2">
           <a
             href={site.phoneHref}
-            className="inline-flex min-h-11 items-center gap-2 border border-cream/35 px-3 py-2 text-sm text-cream sm:min-h-12 sm:px-3.5"
+            className="inline-flex min-h-10 items-center gap-2 border border-line px-2.5 py-1.5 text-sm text-ink sm:min-h-11 sm:px-3"
           >
             <Phone className="pointer-events-none size-4" aria-hidden />
             <span className="hidden lg:inline">{site.phoneDisplay}</span>
@@ -108,7 +109,7 @@ export function Header() {
           </a>
           <button
             type="button"
-            className="relative z-50 inline-flex size-11 shrink-0 touch-manipulation items-center justify-center border border-cream/25 lg:hidden"
+            className="relative z-50 inline-flex size-10 shrink-0 touch-manipulation items-center justify-center border border-line lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -122,9 +123,11 @@ export function Header() {
         </div>
       </div>
 
+      <GateRail />
+
       <nav
         id="mobile-nav"
-        className={`border-t border-white/10 bg-charleston lg:hidden ${open ? "block" : "hidden"}`}
+        className={`border-t border-line bg-parchment lg:hidden ${open ? "block" : "hidden"}`}
         aria-label="Mobile"
       >
         <div className="wrap flex flex-col gap-1 py-3">
@@ -133,15 +136,16 @@ export function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="min-h-12 px-1 py-3 text-lg text-cream"
+              className="min-h-12 px-1 py-3 text-lg text-ink"
             >
               {item.label}
             </Link>
           ))}
-          <Link href="/donate" onClick={() => setOpen(false)} className="min-h-12 px-1 py-3 text-lg text-cream">
+          <Link href="/donate" onClick={() => setOpen(false)} className="min-h-12 px-1 py-3 text-lg text-ink">
             Donate
           </Link>
         </div>
+        <GateRail variant="divider" />
       </nav>
     </header>
   );

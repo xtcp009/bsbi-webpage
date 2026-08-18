@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BlurText from "@/components/react-bits/blur-text";
 
 export function PageHero({
   kicker,
@@ -13,7 +14,16 @@ export function PageHero({
     <section className="border-b border-line">
       <div className="wrap py-12 sm:py-16 lg:py-20">
         {kicker ? <p className="kicker">{kicker}</p> : null}
-        <h1 className={`display max-w-3xl text-3xl text-charleston sm:text-4xl ${kicker ? "mt-3" : ""}`}>{title}</h1>
+        <BlurText
+          text={title}
+          tag="h1"
+          delay={70}
+          direction="bottom"
+          stepDuration={0.28}
+          className={`display max-w-3xl text-3xl text-charleston sm:text-4xl ${kicker ? "mt-3" : ""}`}
+          animationFrom={{ filter: "blur(8px)", opacity: 0, y: 14 }}
+          animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
+        />
         <p className="lede mt-5 text-muted">{lede}</p>
       </div>
     </section>

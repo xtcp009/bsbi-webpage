@@ -4,7 +4,10 @@ import { EruvBanner } from "@/components/eruv-banner";
 import { EventList } from "@/components/event-row";
 import { NextMinyan } from "@/components/next-minyan";
 import { ActionLink } from "@/components/page-hero";
+import AnimatedContent from "@/components/react-bits/animated-content";
+import BlurText from "@/components/react-bits/blur-text";
 import FadeContent from "@/components/react-bits/fade-content";
+import ScrollReveal from "@/components/react-bits/scroll-reveal";
 import { ScaledImage } from "@/components/scaled-image";
 import { SourceNote } from "@/components/source-note";
 import { copy } from "@/content/copy";
@@ -34,19 +37,26 @@ export default async function HomePage() {
             alt="Brith Sholom Beth Israel Synagogue on Rutledge Avenue"
             fill
             priority
-            sizes="100vw"
-            className="object-cover object-[center_58%] lg:object-[center_50%]"
-            frameClassName="w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9]"
+            sizes="(max-width: 1024px) 100vw, 64rem"
+            className="object-contain object-center"
+            frameClassName="mx-auto w-full max-w-5xl bg-parchment aspect-[4/3] max-h-[min(20rem,46vh)] sm:max-h-[min(24rem,48vh)] lg:max-h-[min(26rem,44vh)]"
           />
           <figcaption className="museum-caption wrap pt-4">
             Brith Sholom Beth Israel · 182 Rutledge Avenue · Charleston, South Carolina
           </figcaption>
         </figure>
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
+          <BlurText
+            text="Brith Sholom Beth Israel"
+            tag="h1"
+            delay={80}
+            direction="bottom"
+            stepDuration={0.28}
+            className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston"
+            animationFrom={{ filter: "blur(8px)", opacity: 0, y: 16 }}
+            animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
+          />
           <FadeContent>
-            <h1 className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston">
-              Brith Sholom Beth Israel
-            </h1>
             <p className="lede mt-6 text-muted">{copy.homeTagline}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
               <ActionLink href="/times">Today&apos;s Services</ActionLink>
@@ -122,7 +132,13 @@ export default async function HomePage() {
         <FadeContent>
         <div className="wrap grid items-start gap-10 py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
           <div className="lg:col-span-5 lg:pt-4">
-            <h2 className="display text-3xl text-charleston sm:text-4xl">{copy.welcomeClose}</h2>
+            <ScrollReveal
+              containerClassName="display text-3xl text-charleston sm:text-4xl"
+              baseRotation={1}
+              blurStrength={2}
+            >
+              {copy.welcomeClose}
+            </ScrollReveal>
             <p className="lede mt-6 text-muted">{copy.historyLead}</p>
             <p className="mt-6">
               <Link href="/about" className="text-link">
@@ -199,7 +215,13 @@ export default async function HomePage() {
         <FadeContent>
         <div className="wrap grid gap-12 py-16 lg:grid-cols-12 lg:py-24">
           <div className="lg:col-span-5">
-            <h2 className="display text-3xl text-charleston sm:text-4xl">Our story</h2>
+            <ScrollReveal
+              containerClassName="display text-3xl text-charleston sm:text-4xl"
+              baseRotation={1}
+              blurStrength={2}
+            >
+              Our story
+            </ScrollReveal>
             <p className="lede mt-6 text-muted">{copy.rabbiWelcome}</p>
           </div>
           <ol className="lg:col-span-7">
@@ -267,6 +289,7 @@ export default async function HomePage() {
       <section className="border-t border-line">
         <FadeContent>
         <div className="wrap grid gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-20">
+          <AnimatedContent>
           <div>
             <p className="kicker">Downtown</p>
             <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">
@@ -283,6 +306,8 @@ export default async function HomePage() {
               </Link>
             </p>
           </div>
+          </AnimatedContent>
+          <AnimatedContent delay={0.08}>
           <div>
             <p className="kicker">South Windermere</p>
             <h2 className="display mt-3 text-2xl text-charleston sm:text-3xl">
@@ -295,6 +320,7 @@ export default async function HomePage() {
               </a>
             </p>
           </div>
+          </AnimatedContent>
         </div>
         </FadeContent>
       </section>

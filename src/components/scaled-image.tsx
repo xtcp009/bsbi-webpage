@@ -12,7 +12,7 @@ export function ScaledImage({ className = "", frameClassName = "", alt, fill, si
         alt={alt}
         fill={fill}
         sizes={sizes ?? (fill ? "100vw" : undefined)}
-        className={fill ? `object-cover object-center ${className}` : `h-auto w-full max-w-full object-contain ${className}`}
+        className={fill ? className : `h-auto w-full max-w-full object-contain ${className}`}
         {...props}
       />
     </div>

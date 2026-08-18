@@ -294,17 +294,53 @@ figure img {
 }
 
 .nav-link {
+  position: relative;
   text-decoration: none;
-  text-underline-offset: 0.42em;
-  text-decoration-thickness: 2px;
 }
 
 .nav-link:hover,
-.nav-link:focus-visible,
-.nav-link.is-active {
-  color: var(--cream);
-  text-decoration: underline;
-  text-decoration-color: var(--gold);
+.nav-link:focus-visible {
+  color: var(--ink);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0.7em;
+  right: 0.7em;
+  bottom: 0.15em;
+  height: 2px;
+  background: var(--gold);
+}
+
+.gate-rail {
+  width: 100%;
+  height: 20px;
+  background: var(--gold);
+  opacity: 0.72;
+  pointer-events: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+
+.gate-rail-divider {
+  height: 16px;
+  opacity: 0.55;
+}
+
+.gate-rail-active {
+  width: 2.75rem;
+  height: 10px;
+  margin-inline: auto;
+  opacity: 0.9;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -319,5 +355,9 @@ figure img {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .gate-rail {
+    transition: none;
   }
 }
