@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import type { DayBoard, Service } from "@/lib/zmanim";
 import { charlestonNow } from "@/lib/format";
 import { site } from "@/lib/site";
+import { ActionLink } from "@/components/page-hero";
 
 function pickNext(board: DayBoard): Service | null {
   const now = charlestonNow();
@@ -33,29 +34,49 @@ export function NextMinyan({ board }: { board: DayBoard }) {
       : next?.location === "both"
         ? "Downtown and Minyan House"
         : site.locations.downtown.name;
+  const maps =
+    next?.location === "minyanHouse"
+      ? site.locations.minyanHouse.googleMaps
+      : site.locations.downtown.googleMaps;
 
   return (
-    <section className="panel panel-gold p-5 sm:p-7">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Services</p>
+    <section>
+      <p className="kicker">Next service</p>
       {next ? (
         <>
-          <h2 className="mt-2 font-[family-name:var(--font-display)] text-xl text-charleston sm:text-2xl">
-            {next.name}
-          </h2>
-          <p className="mt-1 text-lg font-semibold text-ink sm:text-xl">{next.time}</p>
-          <p className="mt-3 text-sm text-muted">
-            {board.label} · {location}
-            {next.note ? ` · ${next.note}` : ""}
+          <p className="display mt-3 text-[clamp(3.1rem,8vw,5.6rem)] leading-none tracking-tight text-charleston tabular-nums">
+            {next.time}
           </p>
+          <h2 className="display mt-5 text-2xl text-charleston sm:text-3xl">{next.name}</h2>
+          <p className="mt-3 max-w-xl text-base text-muted">
+            {location}
+            <span aria-hidden> · </span>
+            {board.label}
+            {next.note && !location.toLowerCase().includes(next.note.toLowerCase()) ? (
+              <>
+                <span aria-hidden> · </span>
+                {next.note}
+              </>
+            ) : null}
+          </p>
+          <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+            <ActionLink href={maps}>Directions</ActionLink>
+            <ActionLink href="/times" variant="ghost">
+              Full schedule
+            </ActionLink>
+          </div>
         </>
       ) : (
         <>
-          <h2 className="mt-2 font-[family-name:var(--font-display)] text-xl text-charleston">
-            {board.label}
-          </h2>
-          <p className="mt-3 text-sm text-muted">
+          <h2 className="display mt-3 text-2xl text-charleston">{board.label}</h2>
+          <p className="mt-4 max-w-xl text-base text-muted">
             We hold services every day, weekdays, Shabboses, and Yom Tovim, for shacharis, mincha &amp; ma&apos;ariv.
           </p>
+          <div className="mt-6">
+            <ActionLink href="/times" variant="ghost">
+              Full schedule
+            </ActionLink>
+          </div>
         </>
       )}
     </section>

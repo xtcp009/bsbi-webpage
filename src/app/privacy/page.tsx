@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         title="What we collect, and what we don't"
         lede="This public site is built for visitors looking for a minyan. We do not need an account to show service times."
       />
-      <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-8 text-sm leading-relaxed sm:px-6">
+      <div className="wrap-narrow section flex flex-col gap-4 text-base leading-relaxed">
         <p>
           This site uses no advertising cookies. Server logs may include IP addresses for security and abuse prevention.
         </p>

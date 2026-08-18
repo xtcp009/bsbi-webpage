@@ -12,6 +12,7 @@ const paths = [
   "/mikvah",
   "/about",
   "/community",
+  "/membership",
   "/calendar",
   "/gallery",
   "/remembrance",

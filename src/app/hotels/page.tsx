@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
-import FadeContent from "@/components/react-bits/fade-content";
 import { copy } from "@/content/copy";
 import { site } from "@/lib/site";
 
@@ -26,30 +25,29 @@ const hotels = [
 export default function HotelsPage() {
   return (
     <>
-      <PageHero kicker="Hotels" title="Hotels" lede={copy.visitBody} />
-      <div className="mx-auto flex max-w-3xl flex-col gap-3 px-4 py-8 sm:px-6">
-        {hotels.map((hotel, index) => (
-          <FadeContent key={hotel.name} delay={index * 0.03}>
-            <article className="panel p-4 sm:p-5">
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <h2 className="font-[family-name:var(--font-display)] text-xl">{hotel.name}</h2>
-                <span className={`px-3 py-1 text-xs font-semibold ${hotel.eruv ? "bg-emerald-700/15 text-emerald-900" : "bg-amber-700/15 text-amber-900"}`}>
-                  {hotel.eruv ? "Inside the eruv" : "Outside the eruv"}
-                </span>
-              </div>
-              <p className="mt-1 text-sm text-muted">
-                {hotel.addr}
-                {hotel.dist ? ` · ${hotel.dist}` : ""}
-              </p>
-              <a className="mt-2 inline-block text-sm font-medium text-teal" href={`tel:${hotel.phone.replace(/\D/g, "")}`}>
-                {hotel.phone}
-              </a>
-              {hotel.note ? <p className="mt-2 text-sm text-muted">{hotel.note}</p> : null}
-            </article>
-          </FadeContent>
+      <PageHero title="Hotels" lede={copy.visitBody} />
+      <div className="wrap-narrow section">
+        {hotels.map((hotel) => (
+          <article key={hotel.name} className="border-t border-line py-6">
+            <h2 className="display text-xl text-charleston">{hotel.name}</h2>
+            <p className="mt-1 text-sm text-muted">
+              {hotel.addr}
+              {hotel.dist ? ` · ${hotel.dist}` : ""}
+              <span aria-hidden> · </span>
+              {hotel.eruv ? "Inside the eruv" : "Outside the eruv"}
+            </p>
+            <a className="text-link mt-2 inline-block text-sm" href={`tel:${hotel.phone.replace(/\D/g, "")}`}>
+              {hotel.phone}
+            </a>
+            {hotel.note ? <p className="mt-2 text-sm text-muted">{hotel.note}</p> : null}
+          </article>
         ))}
-        <p className="text-sm text-muted">
-          For Hotels in the area — also see the <a className="underline underline-offset-4" href="/eruv">Eruv</a> page. Synagogue: {site.phoneDisplay}.
+        <p className="mt-8 border-t border-line pt-6 text-sm text-muted">
+          For hotels in the area, also see the{" "}
+          <a className="text-link" href="/eruv">
+            Eruv
+          </a>{" "}
+          page. Synagogue: {site.phoneDisplay}.
         </p>
       </div>
     </>

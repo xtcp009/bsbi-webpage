@@ -25,6 +25,7 @@ export function JsonLd() {
       latitude: site.coordinates.latitude,
       longitude: site.coordinates.longitude,
     },
+    sameAs: [site.socials.facebook, site.socials.instagram, site.socials.x],
     hasMap: site.locations.downtown.googleMaps,
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

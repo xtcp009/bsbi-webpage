@@ -1,18 +1,18 @@
 export const copy = {
   homeTagline:
-    "We are Charleston's largest orthodox synagogue and the oldest in continuous-use Orthodox Ashkenazi congregation in the country.",
+    "A historic Orthodox synagogue in Charleston, South Carolina, serving the Jewish community since 1854.",
   doorsOpen: "Our doors are open to the entire Jewish community.",
   dailyServices:
     "We hold services every day, weekdays, Shabboses, and Yom Tovim, for shacharis, mincha & ma'ariv.",
   historyLead:
-    "The members of Brith Sholom Beth Israel Synagogue (BSBI) are proud to be part of a congregation that has stood as a bastion of Orthodox Judaism in Charleston, South Carolina, one of America’s most historic and beautiful cities, for the past 165 years. Known throughout the Deep South for its unswerving commitment to the beliefs and values of our ancestors, BSBI is not only the oldest Orthodox Synagogue in the South, but can with great pride claim to be the oldest Ashkenazi Orthodox Synagogue in continuous existence in the United States.",
+    "The members of Brith Sholom Beth Israel Synagogue (BSBI) are proud to be part of a congregation that has stood as a bastion of Orthodox Judaism in Charleston, South Carolina, one of America’s most historic and beautiful cities, for the past 165 years. Known throughout the Deep South for its unswerving commitment to the beliefs and values of our ancestors, BSBI is a historic Orthodox synagogue, serving the Jewish community of Charleston since 1854.",
   facilities:
     "Services are held every morning and evening 365 days a year. In addition, the Synagogue downtown on Rutledge Avenue, services are held every Shabbat and Festival at the Minyan House in the South Windermere neighborhood. The synagogue facility on Rutledge Avenue also includes a modern Mikvah, kosher kitchens, and the Solomon Social Hall for receptions and special occasion. BSBI provides kashrut supervision for several establishments. Burial preparations for any Jew regardless of affiliation are provided by the community's Chevra Kadisha. BSBI offers a wide range of adult education classes, and its activities also include an active Sisterhood and Men’s Club.",
   history1956:
     "The year 1956 was a momentous one for Orthodox Judaism in Charleston. Having renovated the Synagogue on Rutledge Avenue that Beth Israel had opened in 1948, BSBI dedicated it in 1956 as the house of worship for the united congregation. That same year BSBI launched the Charleston Hebrew Institute, which had been organized in 1938, as an Orthodox day school. Now known as the Addlestone Hebrew Academy, the day school still served Charleston’s Jewish community.",
   welcomeClose: "Whether visiting Charleston or living here, the doors of BSBI are open wide in welcome.",
   rabbiWelcome:
-    "Welcome to Brith Sholom Beth Israel (BSBI) Synagogue of Charleston- the oldest Ashkenazic Congregation in continuous use in America!",
+    "Welcome to Brith Sholom Beth Israel (BSBI) Synagogue of Charleston—a historic Ashkenazic congregation serving the Jewish community since 1854!",
   rabbiBody:
     "Our Congregation is proud of our history and excited about our future. Founded by immigrant Polish and Prussian Jews in 1854, our Congregation was strengthened by waves of Eastern European arrivals who found their way to Charleston, South Carolina throughout the 19th and 20th Centuries. Located in Historic Charleston, among centuries-old antebellum homes and architecture, we are proud to be a vital part of one of America’s most loved and best-preserved cities.",
   rabbiToday:
@@ -49,11 +49,18 @@ export const copy = {
     "Our townhome offers a spacious and relaxing environment perfect for families or individuals looking to spend a restful Shabbos near the shul. With 1224 square feet of living space, it features: 4 bedrooms with a combination of twin and full beds to accommodate up to 8 guests comfortably, with 2 full bathrooms and cozy living areas designed for relaxation. (Features: Full kitchenette, water urn, Shabbos hot plate, Shabbos lamps in each room)",
   shabbosHouseReserve:
     "Reserve Your Stay: We invite you to make this townhome your home for Shabbos and experience the warmth and community of our congregation while enjoying the comforts of a private home just steps from our synagogue. For more information or to inquire about availability and pricing, please contact Rivka Bart at khmgmt@bsbisynagogue.org, or call (804)-767-0117.",
-  remembranceTitle: "Baker-Bebergal-Karesh Remembrance Wall Plaque",
-  remembranceTag: "Honor Their Memory. Preserve Their Story.",
-  remembranceWhen: "Sunday, May 10, 2026 · 23 Iyyar 5786",
-  remembranceNote: "In Memory of Joe Engel, He will Never be Forgotten, Dedicated by the Campbell Family",
+  remembranceTitle: "Holocaust Remembrance Wall",
+  remembranceWall: "Baker-Bebergal-Karesh Holocaust Remembrance Wall",
+  remembranceTag: "A lasting memorial and tribute to Joe Engel, and through him to those who perished and those who survived.",
+  remembranceWhen: "Plaques may be dedicated for a contribution of $500.",
+  remembranceNote: "In memory of Joe Engel. He will never be forgotten. Dedicated by the Campbell Family.",
   remembranceFund: "Joe Engel Holocaust Memorial Fund",
+  remembranceBody:
+    "Our Baker-Bebergal-Karesh Holocaust Remembrance Wall is a lasting memorial and tribute not only to Joe Engel but also, through him, to countless others who perished and to those who persevered and survived, especially the survivors who were BSBI members. Please help memorialize them by dedicating a commemorative plaque in honor of survivors or in memory of those millions lost in the Holocaust.",
+  remembranceLegacy:
+    "Your participation will help ensure their names and their experiences are a continuing legacy within our community for generations to come. Together we will reaffirm our commitment to remembrance, education, and the enduring promise of “Never Again.”",
+  remembranceContact:
+    "If you are interested in dedicating a commemorative plaque, or would like additional information, please contact the synagogue office.",
   brotherhood:
     "The Brith Sholom Beth Israel Brotherhood is dedicated to providing camaraderie, service opportunities, and a warm atmosphere for engaging Jewish men throughout the Charleston Jewish Community. The Brotherhood was recently created, in 2017, and has since promoted events, such as a Community Fish Fry and a Sukkot Bourbon and Football event. The Brotherhood is committed to bringing together Jewish men from throughout the Charleston Jewish Community, regardless of denomination or any other affiliation. Quarterly events and fundraisers are continually in development. If you are interested in joining the BSBI Brotherhood, or have any suggestions for events or service opportunities, please contact the BSBI office.",
   sisterhood:
@@ -62,8 +69,14 @@ export const copy = {
     "The Charleston Chevra Kadisha has worked caringly and diligently for many years to prepare the deceased for burial in accordance with Jewish tradition. Our Chevra Kadisha is a member of the National Association of Chevra Kadisha, and takes care of all the Jewish deceased of Charleston regardless of affiliation. The Chevra Kadisha works exclusively with Stuhr's Funeral Home and operates under the guidance of our rabbi.",
   chevraContact:
     "For information please contact David Kirshtein at dekirshtein@comcast.net. All checks can be mailed to Chevrah Kadisha, c/o Ann Baker, 59 Chadwick Drive, Charleston, SC 29407.",
-  parshaClass: "Join BSBI's Weekly Parsha class Thursdays at 11:00 AM in the Social Hall.",
-  lunchAndLearn: "Lunch and Learn (Learning begins approximately 12:30 PM). Can't Make It? Join Us On Zoom!",
+  parshaClass: "Join BSBI's Weekly Parsha class Thursdays at 11:00 AM in the Social Hall with Rabbi Bart.",
+  lunchAndLearn:
+    "Lunch and Learn Thursdays at 12:00 PM at 182 Rutledge Avenue. $10 per person. Order takeout with Chef Linda at (843) 818-9227; deadline Wednesday evenings.",
+  talmudClass:
+    "Tackling the Talmud with Rabbi Bart, Mondays after Maariv in the Library. Gemara is the essential text of the Oral Tradition—the rigor, logic, breadth, and depth of Jewish learning.",
+  membershipLead:
+    "A historic Orthodox synagogue in Charleston, South Carolina, serving the Jewish community since 1854.",
+  membershipBody: "Please find our membership application below.",
   mikvahLead:
     "We kindly request that reservations for the Mikvah be made 24 hours in advance. Please contact Rebbetzin Rivka Bart to make an appointment at 804.767.0117 or rivkaabart@gmail.com",
   mikvahDishes:
@@ -94,30 +107,66 @@ export const copy = {
     "If you are a BSBI Member, you must sign in with your User Name and Password to ensure that your payments and donations are credited to your account.",
 } as const;
 
-export const events = [
+export type SiteEvent = {
+  title: string;
+  detail: string;
+  when: string;
+  href: string;
+  recurring?: boolean;
+  startDate?: string;
+};
+
+export const events: SiteEvent[] = [
   {
-    title: "Baker-Bebergal-Karesh Remembrance Wall Plaque",
-    detail: "Honor Their Memory. Preserve Their Story.",
-    when: "Sunday, May 10, 2026 · 23 Iyyar 5786",
-    href: "/remembrance",
+    title: "Tackling the Talmud",
+    detail: "Rabbi Bart · Library",
+    when: "Mondays after Maariv",
+    href: "/community#classes",
+    recurring: true,
   },
   {
-    title: "Shavuot Dinner",
-    detail: "05/21/2026",
-    when: "Thursday, May 21, 2026 · 9:20pm",
-    href: "/calendar",
-  },
-  {
-    title: "Officer Matt's Farewell BBQ",
-    detail: "05/24/26",
-    when: "Sunday, May 24, 2026 · 5:00pm",
-    href: "/calendar",
+    title: "Weekly Parsha Class",
+    detail: "Rabbi Bart · Social Hall",
+    when: "Thursdays at 11:00 AM",
+    href: "/community#classes",
+    recurring: true,
   },
   {
     title: "Lunch and Learn",
-    detail: "Weekly class",
-    when: "Thursday, May 28, 2026 · 12:00pm",
+    detail: "$10 · 182 Rutledge Avenue",
+    when: "Thursdays at 12:00 PM",
     href: "/community#classes",
+    recurring: true,
+  },
+];
+
+export const weeklyClasses = [
+  {
+    title: "Tackling the Talmud",
+    teacher: "Rabbi Bart",
+    when: "Mondays after Maariv",
+    where: "Library",
+    image: "/images/class-talmud.jpg",
+    alt: "Tackling the Talmud with Rabbi Bart, Mondays after Maariv in the Library",
+    body: "Gemara — Talmud — is the essential text of the Oral Tradition and the bridge between the Written Torah and modern-day Jewish law. There is nothing quite like the rigor and logic, breadth and depth, of learning Talmud.",
+  },
+  {
+    title: "Weekly Parsha Class",
+    teacher: "Rabbi Bart",
+    when: "Thursdays at 11:00 AM",
+    where: "Social Hall",
+    image: "/images/class-parsha.jpg",
+    alt: "Weekly Parsha class Thursdays at 11:00 AM with Rabbi Bart",
+    body: "Join BSBI’s weekly Parsha class with Rabbi Bart.",
+  },
+  {
+    title: "Lunch and Learn",
+    teacher: "",
+    when: "Thursdays at 12:00 PM",
+    where: "182 Rutledge Avenue",
+    image: "/images/class-lunch-and-learn.jpg",
+    alt: "BSBI Lunch and Learn Thursdays at 12:00 PM",
+    body: "$10 per person. Order takeout with Chef Linda at (843) 818-9227; deadline Wednesday evenings. Supported by the Charleston Jewish Federation and the Carolina Foundation for Jewish Seniors.",
   },
 ] as const;
 

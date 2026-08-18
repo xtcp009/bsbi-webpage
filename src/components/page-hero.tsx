@@ -10,16 +10,11 @@ export function PageHero({
   lede: string;
 }) {
   return (
-    <section className="border-b border-line bg-charleston text-cream">
-      <div className="mx-auto max-w-6xl px-4 py-7 sm:px-6 sm:py-9">
-        {kicker ? (
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">{kicker}</p>
-        ) : null}
-        <h1 className="mt-2 max-w-3xl font-[family-name:var(--font-display)] text-2xl leading-snug sm:text-3xl">
-          {title}
-        </h1>
-        <div className="ornament my-3 max-w-xs" />
-        <p className="max-w-2xl text-sm leading-relaxed text-cream/80 sm:text-base">{lede}</p>
+    <section className="border-b border-line">
+      <div className="wrap py-12 sm:py-16 lg:py-20">
+        {kicker ? <p className="kicker">{kicker}</p> : null}
+        <h1 className={`display max-w-3xl text-3xl text-charleston sm:text-4xl ${kicker ? "mt-3" : ""}`}>{title}</h1>
+        <p className="lede mt-5 text-muted">{lede}</p>
       </div>
     </section>
   );
@@ -35,20 +30,20 @@ export function ActionLink({
   variant?: "primary" | "secondary" | "ghost";
 }) {
   const styles = {
-    primary: "bg-gold text-charleston",
-    secondary: "bg-teal text-cream",
-    ghost: "border border-line bg-parchment text-ink",
+    primary: "button-primary",
+    secondary: "button-secondary",
+    ghost: "text-link inline-flex min-h-12 items-center py-2",
   }[variant];
-  const className = `inline-flex min-h-10 items-center justify-center rounded-md px-4 text-center text-sm font-medium tracking-wide ${styles}`;
+
   if (href.startsWith("/") && !href.startsWith("//")) {
     return (
-      <Link href={href} className={className}>
+      <Link href={href} className={styles}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={className}>
+    <a href={href} className={styles}>
       {children}
     </a>
   );

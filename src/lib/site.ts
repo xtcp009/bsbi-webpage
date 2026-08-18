@@ -2,10 +2,9 @@ export const site = {
   name: "BSBI Synagogue",
   legalName: "Brith Sholom Beth Israel Congregation",
   shortName: "BSBI",
-  tagline:
-    "We are Charleston's largest orthodox synagogue and the oldest in continuous-use Orthodox Ashkenazi congregation in the country.",
+  tagline: "A historic Orthodox synagogue in Charleston, South Carolina, serving the Jewish community since 1854.",
   description:
-    "We are Charleston's largest orthodox synagogue and the oldest in continuous-use Orthodox Ashkenazi congregation in the country. Our doors are open to the entire Jewish community.",
+    "A historic Orthodox synagogue in Charleston, South Carolina, serving the Jewish community since 1854. Our doors are open to the entire Jewish community.",
   url: "https://www.bsbisynagogue.org",
   locale: "en_US",
   timezone: "America/New_York",
@@ -18,7 +17,15 @@ export const site = {
   directorEmail: "Mary@BSBISynagogue.org",
   presidentEmail: "president@bsbisynagogue.org",
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL || "",
-  facebook: "https://www.facebook.com/bsbisynagogue",
+  membershipApplicationUrl:
+    "https://images.shulcloud.com/1505/uploads/Files/Membership-and-Dues/BSBImembershipapplication.png",
+  facebook: "https://www.facebook.com/BSBISynagogue/",
+  socials: {
+    facebook: "https://www.facebook.com/BSBISynagogue/",
+    facebookPhotos: "https://www.facebook.com/BSBISynagogue/photos",
+    instagram: "https://www.instagram.com/bsbichs/",
+    x: "https://x.com/bsbisynagogue",
+  },
   coordinates: {
     latitude: 32.7883,
     longitude: -79.9428,
@@ -83,11 +90,11 @@ export const site = {
 } as const;
 
 export const nav = [
-  { href: "/times", label: "Services" },
-  { href: "/visit", label: "Visit Charleston" },
-  { href: "/gallery", label: "Photo Gallery" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/times", label: "Services", short: "Services" },
+  { href: "/visit", label: "Visit Charleston", short: "Visit" },
+  { href: "/gallery", label: "Photo Gallery", short: "Gallery" },
+  { href: "/about", label: "About", short: "About" },
+  { href: "/contact", label: "Contact", short: "Contact" },
 ] as const;
 
 export const footerNav = [
@@ -101,6 +108,7 @@ export const footerNav = [
   { href: "/locations", label: "Locations" },
   { href: "/kosher", label: "Kosher" },
   { href: "/community", label: "Sisterhood" },
+  { href: "/membership", label: "Membership" },
   { href: "/donate", label: "Donate" },
   { href: "/privacy", label: "Privacy" },
 ] as const;

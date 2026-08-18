@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PageShell } from "@/components/more-info";
 import { ActionLink, PageHero } from "@/components/page-hero";
-import FadeContent from "@/components/react-bits/fade-content";
 import { copy } from "@/content/copy";
 import { site } from "@/lib/site";
 
@@ -16,9 +15,9 @@ export default function LocationsPage() {
 
   return (
     <>
-      <PageHero kicker="Locations" title="Locations" lede={copy.downtownLocation} />
+      <PageHero title="Locations" lede={copy.downtownLocation} />
       <PageShell>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-14">
           <Place
             title={downtown.name}
             address={downtown.fullAddress}
@@ -36,24 +35,22 @@ export default function LocationsPage() {
             embed={minyanHouse.embed}
           />
 
-          <FadeContent>
-            <section className="panel panel-gold p-5 sm:p-6">
-              <h2 className="font-[family-name:var(--font-display)] text-2xl">BSBI Cemeteries in Charleston</h2>
-              <p className="mt-3 text-sm leading-relaxed">{copy.cemeteryLead}</p>
-              <ul className="mt-4 flex flex-col gap-3 text-sm leading-relaxed">
-                <li>
-                  <strong>Maryville Cemetery</strong> — {copy.cemeteryMaryville}
-                </li>
-                <li>
-                  <strong>Beth Israel Cemetery</strong> — {copy.cemeteryBethIsrael}
-                </li>
-                <li>
-                  <strong>Brith Sholom Cemetery</strong> — {copy.cemeteryBrithSholom}
-                </li>
-              </ul>
-              <p className="mt-4 text-sm leading-relaxed text-muted">{copy.cemeteryNote}</p>
-            </section>
-          </FadeContent>
+          <section className="border-t border-line pt-10">
+            <h2 className="display text-2xl">Cemeteries in Charleston</h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.cemeteryLead}</p>
+            <ul className="mt-4 flex max-w-2xl flex-col gap-3 text-base leading-relaxed">
+              <li>
+                <strong>Maryville Cemetery</strong> — {copy.cemeteryMaryville}
+              </li>
+              <li>
+                <strong>Beth Israel Cemetery</strong> — {copy.cemeteryBethIsrael}
+              </li>
+              <li>
+                <strong>Brith Sholom Cemetery</strong> — {copy.cemeteryBrithSholom}
+              </li>
+            </ul>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">{copy.cemeteryNote}</p>
+          </section>
         </div>
       </PageShell>
     </>
@@ -78,10 +75,10 @@ function Place({
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h2 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl">{title}</h2>
-        <p className="mt-2 font-medium">{address}</p>
-        <p className="mt-3 text-sm leading-relaxed text-muted">{body}</p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+        <h2 className="display text-2xl sm:text-3xl">{title}</h2>
+        <p className="mt-2 text-lg">{address}</p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">{body}</p>
+        <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
           <ActionLink href={google}>Google Maps</ActionLink>
           <ActionLink href={apple} variant="ghost">
             Apple Maps

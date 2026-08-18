@@ -16,7 +16,7 @@ const securityHeaders = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
+      "img-src 'self' data: blob: https://images.shulcloud.com",
       "font-src 'self'",
       "connect-src 'self' ws: wss:",
       "frame-src https://www.google.com https://maps.google.com",
@@ -33,6 +33,13 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.shulcloud.com",
+        pathname: "/1505/**",
+      },
+    ],
   },
   async headers() {
     return [
@@ -62,6 +69,7 @@ const nextConfig: NextConfig = {
       { source: "/brotherhood.html", destination: "/community", permanent: true },
       { source: "/chevra-kadisha.html", destination: "/community", permanent: true },
       { source: "/weekly-classes.html", destination: "/community", permanent: true },
+      { source: "/membership.html", destination: "/membership", permanent: true },
       { source: "/rentals", destination: "/community", permanent: true },
       { source: "/schools", destination: "/community", permanent: true },
       { source: "/photo_gallery.php", destination: "/gallery", permanent: true },

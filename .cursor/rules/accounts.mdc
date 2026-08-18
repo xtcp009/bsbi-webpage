@@ -1,0 +1,15 @@
+---
+description: Use the CofC GitHub and Vercel accounts only in this repo
+alwaysApply: true
+---
+
+# Account lock (this repo only)
+
+Do not use `0xcryptj`, `joarbiser`, or any other GitHub/Vercel login for BSBI work. Do not change global `git`, `gh`, or `vercel` auth for other projects.
+
+- **Email:** `arbiserj@g.cofc.edu`
+- **GitHub:** `xtcp009` — origin is `https://github.com/xtcp009/bsbi-webpage.git`
+- **Git author:** local `user.email` / `user.name` only (`Joseph Arbiser` / `arbiserj@g.cofc.edu`)
+- **Vercel:** team `bsbi` (`team_b08XbYv0k9AVJFl3RHTi3JLt`), project `bsbi-webpage` (`prj_WXftyVaW1lPiXRIJDuOHbKr3iA91`)
+- **Vercel user:** `arbiserj-5514` / `arbiserj@g.cofc.edu`
+- Production deploys from `main` on that GitHub repo. Scope CLI commands with `--scope bsbi`.

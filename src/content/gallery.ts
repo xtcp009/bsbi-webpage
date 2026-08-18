@@ -1,22 +1,7 @@
 export const gallery = {
   title: "Photo Gallery",
-  albumsNote: "Photo Albums",
-  albums: [
-    "Breakfast with Bill Novit",
-    "Board Installation and Awards 2017",
-    "Breakfast w Former IDF General",
-    "Breakfast w Judge Gergel",
-    "Breakfast w Mayor Tecklenberg",
-    "Chanukah Get Together 2018",
-    "Holocaust Remembrance 2016",
-    "Joe Engel's 91st Birthday Dinner",
-    "Leonard Goldberg New Book Breakfast",
-    "Lucier Bris",
-    "Making Menorah Boxes at AHA",
-    "Men's Night Out 10.30.2018",
-    "Purim 2020",
-    "Purim 2023",
-  ],
+  communityNote:
+    "Photographs of congregational life — dinners, classes, holidays, and gatherings — live on the synagogue’s Facebook page.",
   today: [
     {
       src: "/images/exterior-facade.jpg",
@@ -56,14 +41,9 @@ export const gallery = {
   ],
   historic: [
     {
-      src: "/images/hero-sketch.jpg",
-      alt: "Architectural drawing of Brith Sholom Beth Israel Synagogue",
-      caption: "Architectural drawing",
-    },
-    {
       src: "/images/habs-gate.jpg",
       alt: "Central double pass gate by Sabel Iron Works, ca. 1947",
-      caption: "Central double pass gate by Sabel Iron Works, ca. 1947",
+      caption: "Central double-pass gate, Sabel Iron Works, ca. 1947",
     },
     {
       src: "/images/habs-2.jpg",

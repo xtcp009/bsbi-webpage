@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { EruvBanner } from "@/components/eruv-banner";
 import { PageShell } from "@/components/more-info";
 import { ActionLink, PageHero } from "@/components/page-hero";
-import FadeContent from "@/components/react-bits/fade-content";
 import { copy } from "@/content/copy";
 import { site } from "@/lib/site";
 
@@ -17,22 +16,20 @@ export default function EruvPage() {
     <>
       <PageHero title="Eruv" lede={copy.eruvRabbi} />
       <PageShell>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-10">
           <EruvBanner />
-          <FadeContent>
-            <section>
-              <h2 className="font-[family-name:var(--font-display)] text-2xl">Downtown Eruv</h2>
-              <p className="mt-3 text-sm leading-relaxed">{copy.eruvDowntown}</p>
-            </section>
-          </FadeContent>
-          <FadeContent delay={0.08}>
-            <section>
-              <h2 className="font-[family-name:var(--font-display)] text-2xl">South Windermere Eruv</h2>
-              <p className="mt-3 text-sm leading-relaxed">{copy.eruvWest}</p>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{copy.eruvPerimeter}</p>
-            </section>
-          </FadeContent>
-          <ActionLink href="/locations">Locations</ActionLink>
+          <section className="border-t border-line pt-10">
+            <h2 className="display text-2xl">Downtown Eruv</h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.eruvDowntown}</p>
+          </section>
+          <section className="border-t border-line pt-10">
+            <h2 className="display text-2xl">South Windermere Eruv</h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed">{copy.eruvWest}</p>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">{copy.eruvPerimeter}</p>
+          </section>
+          <ActionLink href="/locations" variant="ghost">
+            Locations
+          </ActionLink>
         </div>
       </PageShell>
     </>
