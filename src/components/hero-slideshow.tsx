@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useState } from "react";
-import FadeContent from "@/components/react-bits/fade-content";
+import SplitText from "@/components/react-bits/split-text";
 import type { HeroSlide } from "@/lib/shulcloud";
 
 const INTERVAL_MS = 6500;
@@ -53,8 +53,12 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
             className="absolute inset-0"
             aria-hidden={i !== index}
             initial={false}
-            animate={{ opacity: i === index ? 1 : 0 }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
+            animate={{
+              opacity: i === index ? 1 : 0,
+              filter: reduceMotion ? "blur(0px)" : i === index ? "blur(0px)" : "blur(10px)",
+              scale: i === index ? 1 : 1.02,
+            }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={slide.src}
@@ -68,21 +72,33 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
           </motion.div>
         ))}
       </div>
-      <FadeContent>
-        <figcaption className="museum-caption wrap pt-4">
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={current.src}
-              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-              transition={{ duration: 0.35 }}
-            >
-              {current.alt} · 182 Rutledge Avenue · Charleston, South Carolina
-            </motion.span>
-          </AnimatePresence>
-        </figcaption>
-      </FadeContent>
+      <figcaption className="museum-caption wrap pt-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current.src}
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.28 }}
+          >
+            {reduceMotion ? (
+              <span>
+                {current.alt} · 182 Rutledge Avenue · Charleston, South Carolina
+              </span>
+            ) : (
+              <SplitText
+                text={`${current.alt} · 182 Rutledge Avenue · Charleston, South Carolina`}
+                tag="span"
+                delay={28}
+                duration={0.45}
+                animateOnMount
+                className="block"
+                textAlign="left"
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </figcaption>
     </figure>
   );
 }

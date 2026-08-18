@@ -2,15 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { LogIn, Menu, Phone, X } from "lucide-react";
 import { GateOrnament } from "@/components/decorative/gate-ornament";
+import SplitText from "@/components/react-bits/split-text";
 import { nav, site } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const titleId = useId();
+  const menuId = "site-nav";
 
   useEffect(() => {
     setOpen(false);
@@ -23,15 +27,24 @@ export function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <header className="site-header relative z-50 overflow-x-clip text-ink">
-      <div className="header-gold-rule relative z-20" />
+    <header className="site-header relative z-50 text-ink">
+      <div className="header-gold-rule" />
       <GateOrnament variant="nav" />
 
-      <div className="chrome-copy relative z-10 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 py-2.5 sm:gap-3 lg:py-3">
+      <div className="chrome-copy relative z-10 flex items-center justify-between">
         <Link
           href="/"
-          className="relative z-20 justify-self-start pl-3 sm:pl-4"
+          className="relative z-[60] pl-3 sm:pl-4"
           aria-label={`${site.name} home`}
           onClick={() => setOpen(false)}
         >
@@ -45,83 +58,91 @@ export function Header() {
           />
         </Link>
 
-        <nav
-          className="hidden min-w-0 items-center justify-center gap-[clamp(1.25rem,2.6vw,2.75rem)] px-2 lg:flex"
-          aria-label="Primary"
+        <button
+          type="button"
+          className="relative z-[60] mr-3 inline-flex size-10 shrink-0 touch-manipulation items-center justify-center border border-line bg-beige shadow-[0_0_16px_rgba(232,213,181,0.9)] sm:mr-4"
+          aria-expanded={open}
+          aria-controls={menuId}
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((value) => !value)}
         >
-          {nav.map((item) => {
-            const active = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link font-display py-1 text-[0.9rem] tracking-[0.05em] ${
-                  active ? "is-active text-ink" : "text-ink/80"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="relative z-20 mr-3 flex shrink-0 items-center gap-2 justify-self-end sm:mr-4">
-          <a
-            href={site.phoneHref}
-            className="inline-flex min-h-10 items-center gap-2 border border-line bg-beige px-2.5 py-1.5 text-sm text-ink sm:min-h-11 sm:px-3"
-          >
-            <Phone className="pointer-events-none size-4" aria-hidden />
-            <span className="hidden sm:inline">Call</span>
-          </a>
-          <a
-            href={site.memberLoginUrl}
-            className="inline-flex min-h-10 items-center gap-2 border border-line bg-beige px-2.5 py-1.5 text-sm text-ink sm:min-h-11 sm:px-3"
-          >
-            <LogIn className="pointer-events-none size-4" aria-hidden />
-            <span className="hidden sm:inline">Member login</span>
-            <span className="sm:hidden">Login</span>
-          </a>
-          <button
-            type="button"
-            className="inline-flex size-10 shrink-0 touch-manipulation items-center justify-center border border-line bg-beige lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <X className="pointer-events-none size-5" aria-hidden /> : <Menu className="pointer-events-none size-5" aria-hidden />}
-          </button>
-        </div>
+          {open ? <X className="pointer-events-none size-5" aria-hidden /> : <Menu className="pointer-events-none size-5" aria-hidden />}
+        </button>
       </div>
 
-      <nav
-        id="mobile-nav"
-        className={`relative z-10 border-t border-line/70 bg-beige lg:hidden ${open ? "block" : "hidden"}`}
-        aria-label="Mobile"
-      >
-        <div className="wrap flex flex-col gap-1 py-3">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
+      <AnimatePresence>
+        {open ? (
+          <>
+            <motion.button
+              type="button"
+              className="fixed inset-0 z-40 bg-[rgba(36,35,31,0.28)]"
+              aria-label="Close menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="min-h-12 px-1 py-3 text-lg text-ink"
+            />
+            <motion.nav
+              id={menuId}
+              className="site-sidebar"
+              aria-labelledby={titleId}
+              aria-modal="true"
+              role="dialog"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
-              {item.label}
-            </Link>
-          ))}
-          <Link href="/donate" onClick={() => setOpen(false)} className="min-h-12 px-1 py-3 text-lg text-ink">
-            Donate
-          </Link>
-          <a
-            href={site.memberLoginUrl}
-            onClick={() => setOpen(false)}
-            className="min-h-12 px-1 py-3 text-lg text-ink"
-          >
-            Member login
-          </a>
-        </div>
-      </nav>
+              <SplitText
+                text="Menu"
+                tag="p"
+                delay={40}
+                duration={0.45}
+                animateOnMount
+                className="display relative z-10 text-2xl text-ink"
+                textAlign="left"
+              />
+              <p id={titleId} className="sr-only">
+                Site menu
+              </p>
+              <ul className="relative z-10 mt-6 flex flex-col gap-1">
+                {nav.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={`block min-h-12 py-3 text-lg ${pathname === item.href ? "text-ink" : "text-ink/80"}`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/donate" onClick={() => setOpen(false)} className="block min-h-12 py-3 text-lg text-ink/80">
+                    Donate
+                  </Link>
+                </li>
+              </ul>
+              <div className="relative z-10 mt-8 flex flex-col gap-3">
+                <a
+                  href={site.phoneHref}
+                  className="inline-flex min-h-11 items-center gap-2 border border-line bg-beige px-3 text-sm text-ink"
+                >
+                  <Phone className="size-4" aria-hidden />
+                  Call {site.phoneDisplay}
+                </a>
+                <a
+                  href={site.memberLoginUrl}
+                  className="inline-flex min-h-11 items-center gap-2 border border-line bg-beige px-3 text-sm text-ink"
+                >
+                  <LogIn className="size-4" aria-hidden />
+                  Member login
+                </a>
+              </div>
+            </motion.nav>
+          </>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

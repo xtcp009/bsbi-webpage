@@ -5,9 +5,9 @@ import { EventList } from "@/components/event-row";
 import { NextMinyan } from "@/components/next-minyan";
 import { ActionLink } from "@/components/page-hero";
 import AnimatedContent from "@/components/react-bits/animated-content";
-import BlurText from "@/components/react-bits/blur-text";
 import FadeContent from "@/components/react-bits/fade-content";
 import ScrollReveal from "@/components/react-bits/scroll-reveal";
+import SplitText from "@/components/react-bits/split-text";
 import { HeroSlideshow } from "@/components/hero-slideshow";
 import { ScaledImage } from "@/components/scaled-image";
 import { SourceNote } from "@/components/source-note";
@@ -35,15 +35,12 @@ export default async function HomePage() {
       <section>
         <HeroSlideshow slides={HERO_SLIDES} />
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
-          <BlurText
+          <SplitText
             text="Brith Sholom Beth Israel"
             tag="h1"
-            delay={80}
-            direction="bottom"
-            stepDuration={0.28}
+            delay={70}
+            duration={0.7}
             className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston"
-            animationFrom={{ filter: "blur(8px)", opacity: 0, y: 16 }}
-            animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
           />
           <FadeContent>
             <p className="lede mt-6 text-muted">{copy.homeTagline}</p>
