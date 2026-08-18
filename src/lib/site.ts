@@ -25,6 +25,7 @@ export const site = {
    */
   shulcloudOrigin: "https://bsbisynagogue.shulcloud.com",
   shulcloudPublicUrl: "https://www.bsbisynagogue.org",
+  memberLoginUrl: "https://www.bsbisynagogue.org/login.php?url=https://www.bsbisynagogue.org/",
   facebook: "https://www.facebook.com/BSBISynagogue/",
   socials: {
     facebook: "https://www.facebook.com/BSBISynagogue/",
@@ -101,6 +102,58 @@ export const nav = [
   { href: "/gallery", label: "Photo Gallery", short: "Gallery" },
   { href: "/about", label: "About", short: "About" },
   { href: "/contact", label: "Contact", short: "Contact" },
+] as const;
+
+export const headerLeft = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/times", label: "Services" },
+] as const;
+
+export const headerRight = [
+  { href: "/visit", label: "Visit" },
+  { href: "/calendar", label: "Events" },
+  { href: "/donate", label: "Giving" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
+export const footerGroups = [
+  {
+    heading: "About",
+    links: [
+      { href: "/about", label: "Our story" },
+      { href: "/locations", label: "Locations" },
+      { href: "/gallery", label: "Photo gallery" },
+      { href: "/remembrance", label: "Remembrance" },
+    ],
+  },
+  {
+    heading: "Prayer",
+    links: [
+      { href: "/times", label: "Minyan times" },
+      { href: "/calendar", label: "Calendar" },
+      { href: "/eruv", label: "Eruv" },
+      { href: "/mikvah", label: "Mikvah" },
+    ],
+  },
+  {
+    heading: "Visit",
+    links: [
+      { href: "/visit", label: "Visit Charleston" },
+      { href: "/kosher", label: "Kosher" },
+      { href: "/hotels", label: "Hotels" },
+      { href: "/community", label: "Community" },
+    ],
+  },
+  {
+    heading: "Get involved",
+    links: [
+      { href: "/membership", label: "Membership" },
+      { href: "/donate", label: "Donate" },
+      { href: "/contact", label: "Contact" },
+      { href: "/privacy", label: "Privacy" },
+    ],
+  },
 ] as const;
 
 export const footerNav = [

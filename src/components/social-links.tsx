@@ -47,9 +47,9 @@ export function SocialLinks({ onDark = false }: { onDark?: boolean }) {
           href={item.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex size-11 items-center justify-center border ${
+          className={`inline-flex size-11 items-center justify-center rounded-full border ${
             onDark
-              ? "border-cream/30 text-cream hover:border-cream hover:bg-cream/10"
+              ? "border-[#e8dcc6]/35 text-[#e8dcc6] hover:border-gold hover:text-gold"
               : "border-line text-charleston hover:border-charleston"
           }`}
           aria-label={item.label}

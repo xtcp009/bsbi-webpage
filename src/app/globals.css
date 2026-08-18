@@ -24,7 +24,7 @@
   --page-narrow: 42rem;
   --page-pad: clamp(1.25rem, 3.6vw, 2.5rem);
   --section-y: clamp(2.5rem, 5vw, 5.5rem);
-  --header-h: 6.5rem;
+  --header-h: 11rem;
 }
 
 @theme inline {
@@ -169,6 +169,11 @@ figure img {
   text-wrap: balance;
 }
 
+.chrome-label {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+  font-weight: 500;
+}
+
 .lede {
   max-width: 65ch;
   font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.2rem);
@@ -293,22 +298,13 @@ figure img {
   }
 }
 
-.site-chrome {
+.site-header {
   isolation: isolate;
 }
 
-.site-chrome::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--parchment) 38%, transparent),
-    color-mix(in srgb, var(--parchment) 12%, transparent) 48%,
-    color-mix(in srgb, var(--parchment) 32%, transparent)
-  );
+.site-footer {
+  isolation: isolate;
+  background: #1a2332;
 }
 
 .gate-rail {
@@ -326,29 +322,32 @@ figure img {
   mask-size: contain;
 }
 
-.gate-rail-header,
-.gate-rail-footer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  height: auto;
-  width: 100%;
-}
-
 .gate-rail-header {
-  opacity: 0.46;
+  position: relative;
+  z-index: 0;
+  height: clamp(5.25rem, 14vw, 8.75rem);
+  background: var(--ink);
+  opacity: 0.92;
   -webkit-mask-size: contain;
   mask-size: contain;
-  -webkit-mask-position: center;
-  mask-position: center;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
 }
 
 .gate-rail-footer {
-  opacity: 0.32;
+  position: relative;
+  z-index: 0;
+  height: clamp(6.5rem, 16vw, 10.5rem);
+  background: var(--gold);
+  opacity: 0.55;
   -webkit-mask-size: contain;
   mask-size: contain;
-  -webkit-mask-position: center;
-  mask-position: center;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
+}
+
+.header-star {
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--gold) 55%, transparent));
 }
 
 @media (min-width: 1024px) {
@@ -396,7 +395,6 @@ figure img {
 .nav-link {
   position: relative;
   text-decoration: none;
-  text-shadow: 0 0 0.7em var(--parchment);
 }
 
 .nav-link:hover,
