@@ -1,27 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useId, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useId, useState } from "react";
+import FadeContent from "@/components/react-bits/fade-content";
 import type { HeroSlide } from "@/lib/shulcloud";
 
-const INTERVAL_MS = 7000;
+const INTERVAL_MS = 6500;
 
 export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
   const labelId = useId();
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const count = slides.length;
   const current = slides[index] ?? slides[0];
-
-  const go = useCallback(
-    (next: number) => {
-      if (count < 2) return;
-      setIndex((next + count) % count);
-    },
-    [count],
-  );
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -32,10 +24,12 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
   }, []);
 
   useEffect(() => {
-    if (count < 2 || paused || reduceMotion) return;
-    const timer = window.setInterval(() => go(index + 1), INTERVAL_MS);
+    if (count < 2 || reduceMotion) return;
+    const timer = window.setInterval(() => {
+      setIndex((value) => (value + 1) % count);
+    }, INTERVAL_MS);
     return () => window.clearInterval(timer);
-  }, [count, go, index, paused, reduceMotion]);
+  }, [count, reduceMotion]);
 
   if (!current) return null;
 
@@ -46,28 +40,21 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
         role="region"
         aria-roledescription="carousel"
         aria-labelledby={labelId}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocusCapture={() => setPaused(true)}
-        onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-            setPaused(false);
-          }
-        }}
       >
         <p id={labelId} className="sr-only">
-          Photographs from the current synagogue website
+          Photographs of Brith Sholom Beth Israel Synagogue
+        </p>
+        <p className="sr-only" aria-live="polite">
+          {current.alt}
         </p>
         {slides.map((slide, i) => (
-          <div
+          <motion.div
             key={slide.src}
             className="absolute inset-0"
             aria-hidden={i !== index}
-            style={{
-              opacity: i === index ? 1 : 0,
-              transition: reduceMotion ? "none" : "opacity 700ms ease",
-              pointerEvents: i === index ? "auto" : "none",
-            }}
+            initial={false}
+            animate={{ opacity: i === index ? 1 : 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={slide.src}
@@ -75,50 +62,27 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
               fill
               priority={i === 0}
               quality={75}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
-              className="object-contain object-center"
+              sizes="100vw"
+              className="object-cover object-center"
             />
-          </div>
+          </motion.div>
         ))}
-
-        {count > 1 ? (
-          <>
-            <button
-              type="button"
-              className="hero-slideshow-nav left-3"
-              aria-label="Previous photograph"
-              onClick={() => go(index - 1)}
-            >
-              <ChevronLeft className="size-5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              className="hero-slideshow-nav right-3"
-              aria-label="Next photograph"
-              onClick={() => go(index + 1)}
-            >
-              <ChevronRight className="size-5" aria-hidden />
-            </button>
-            <div className="absolute bottom-3 left-0 right-0 z-10 flex justify-center gap-2">
-              {slides.map((slide, i) => (
-                <button
-                  key={slide.src}
-                  type="button"
-                  className={`size-2.5 rounded-full border border-ink/40 ${
-                    i === index ? "bg-gold" : "bg-parchment/80"
-                  }`}
-                  aria-label={`Show photograph ${i + 1} of ${count}`}
-                  aria-current={i === index}
-                  onClick={() => setIndex(i)}
-                />
-              ))}
-            </div>
-          </>
-        ) : null}
       </div>
-      <figcaption className="museum-caption wrap pt-4">
-        {current.alt} · 182 Rutledge Avenue · Charleston, South Carolina
-      </figcaption>
+      <FadeContent>
+        <figcaption className="museum-caption wrap pt-4">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={current.src}
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+              transition={{ duration: 0.35 }}
+            >
+              {current.alt} · 182 Rutledge Avenue · Charleston, South Carolina
+            </motion.span>
+          </AnimatePresence>
+        </figcaption>
+      </FadeContent>
     </figure>
   );
 }

@@ -1,67 +1,78 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { GateRail } from "@/components/gate-rail";
+import { GateOrnament } from "@/components/decorative/gate-ornament";
 import { SocialLinks } from "@/components/social-links";
-import { StarOfDavid } from "@/components/star-of-david";
-import { footerGroups, site } from "@/lib/site";
+import { footerNav, site } from "@/lib/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="site-footer relative overflow-hidden text-[#e8dcc6]">
-      <div className="relative z-10 wrap grid min-w-0 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-6 lg:gap-8 lg:py-16">
-        <div className="min-w-0 sm:col-span-2 lg:col-span-1">
-          <Link href="/" className="inline-flex flex-col items-start gap-2 text-gold">
-            <StarOfDavid className="size-9" />
-            <span className="chrome-label text-sm uppercase tracking-[0.22em]">{site.name}</span>
+    <footer className="site-footer relative overflow-x-clip text-ink">
+      <GateOrnament variant="footer" />
+
+      <div className="chrome-copy relative z-10 wrap grid min-w-0 gap-10 pb-10 pt-14 md:grid-cols-3 md:gap-12 md:pb-12 md:pt-16">
+        <div className="min-w-0">
+          <Link href="/" className="inline-flex items-center" aria-label={`${site.name} home`}>
+            <Image
+              src="/images/logo-ink.png"
+              alt="BSBI Synagogue"
+              width={280}
+              height={123}
+              className="h-5 w-auto max-w-[5.25rem] object-contain object-left lg:h-6 lg:max-w-[6rem]"
+            />
           </Link>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#e8dcc6]/75">
-            A community rooted in tradition, committed to tomorrow.
+          <Link href="/" className="mt-4 block display text-xl text-ink sm:text-2xl">
+            {site.legalName}
+          </Link>
+          <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">{site.tagline}</p>
+          <div className="mt-6">
+            <SocialLinks />
+          </div>
+        </div>
+        <div className="min-w-0">
+          <p className="text-base text-muted">Find us</p>
+          <address className="mt-3 not-italic text-base leading-relaxed text-ink">
+            <a className="text-ink underline-offset-2 hover:underline" href={site.locations.downtown.googleMaps}>
+              {site.locations.downtown.fullAddress}
+            </a>
+            <br />
+            <a className="text-ink underline-offset-2 hover:underline" href={site.phoneHref}>
+              {site.phoneDisplay}
+            </a>
+            <br />
+            <a className="text-ink underline-offset-2 hover:underline break-all" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+          </address>
+          <p className="mt-4 text-base text-muted">
+            Friday night and Saturday also at the Minyan House,{" "}
+            <a className="text-ink underline-offset-2 hover:underline" href={site.locations.minyanHouse.googleMaps}>
+              {site.locations.minyanHouse.address}
+            </a>
+            .
           </p>
         </div>
-
-        {footerGroups.map((group) => (
-          <div key={group.heading} className="min-w-0">
-            <p className="chrome-label text-xs uppercase tracking-[0.2em] text-gold">{group.heading}</p>
-            <ul className="mt-4 flex flex-col gap-2 text-sm">
-              {group.links.map((item) => (
-                <li key={item.href}>
-                  <Link className="text-[#e8dcc6]/80 hover:text-[#e8dcc6]" href={item.href}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
         <div className="min-w-0">
-          <p className="chrome-label text-xs uppercase tracking-[0.2em] text-gold">Stay connected</p>
-          <p className="mt-4 text-sm leading-relaxed text-[#e8dcc6]/75">
-            Call the office or follow the congregation.
-          </p>
-          <a
-            href={`mailto:${site.email}`}
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-between gap-2 border border-[#e8dcc6]/25 px-3 text-sm text-[#e8dcc6]"
-          >
-            {site.email}
-            <ArrowRight className="size-4 shrink-0 text-gold" aria-hidden />
-          </a>
-          <div className="mt-5">
-            <SocialLinks onDark />
-          </div>
+          <p className="text-base text-muted">On this site</p>
+          <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-base">
+            {footerNav.map((item) => (
+              <li key={item.href}>
+                <Link className="text-ink/80 hover:text-gold" href={item.href}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <div className="relative z-10 px-[var(--page-pad)] pb-3 pt-2 text-center text-xs tracking-wide text-[#e8dcc6]/70">
+      <div className="chrome-copy relative z-10 px-[var(--page-pad)] py-5 text-center text-sm text-muted">
         © {year} {site.legalName}. All rights reserved.{" "}
-        <Link className="hover:text-[#e8dcc6]" href="/privacy">
+        <Link className="text-ink hover:text-gold" href="/privacy">
           Privacy Policy
         </Link>
       </div>
-
-      <GateRail variant="footer" />
     </footer>
   );
 }

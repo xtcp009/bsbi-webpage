@@ -13,7 +13,8 @@ import { ScaledImage } from "@/components/scaled-image";
 import { SourceNote } from "@/components/source-note";
 import { copy } from "@/content/copy";
 import { calendarEntryToEvent } from "@/lib/events";
-import { FALLBACK_HERO_SLIDES, getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
+import { allHeroSlides } from "@/lib/hero-slides";
+import { getShulcloudSnapshot, snapshotToBoard } from "@/lib/shulcloud";
 import { pageMeta, pages } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -32,7 +33,7 @@ export default async function HomePage() {
   return (
     <>
       <section>
-        <HeroSlideshow slides={live.slides.length ? live.slides : FALLBACK_HERO_SLIDES} />
+        <HeroSlideshow slides={allHeroSlides(live.slides)} />
         <div className="wrap pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-16 lg:pt-16">
           <BlurText
             text="Brith Sholom Beth Israel"

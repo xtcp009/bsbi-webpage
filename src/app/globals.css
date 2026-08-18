@@ -25,6 +25,8 @@
   --page-pad: clamp(1.25rem, 3.6vw, 2.5rem);
   --section-y: clamp(2.5rem, 5vw, 5.5rem);
   --header-h: 11rem;
+  --header-ivory: #f7f2e8;
+  --footer-navy: #111a25;
 }
 
 @theme inline {
@@ -298,61 +300,77 @@ figure img {
   }
 }
 
-.site-header {
+.site-header,
+.site-footer {
   isolation: isolate;
+  background: var(--header-ivory);
+  color: var(--ink);
+}
+
+.site-header {
+  min-height: clamp(7.25rem, 20vw, 12.5rem);
 }
 
 .site-footer {
-  isolation: isolate;
-  background: #1a2332;
+  min-height: clamp(22rem, 48vw, 34rem);
 }
 
-.gate-rail {
-  width: 100%;
-  height: 2.75rem;
-  background: var(--gold);
-  opacity: 0.78;
+.site-header::before,
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   pointer-events: none;
-  mask-mode: alpha;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--header-ivory) 88%, transparent) 0%,
+    color-mix(in srgb, var(--header-ivory) 55%, transparent) 42%,
+    color-mix(in srgb, var(--header-ivory) 28%, transparent) 100%
+  );
 }
 
-.gate-rail-header {
-  position: relative;
+.header-gold-rule {
+  height: 1px;
+  background: #c49a55;
+  opacity: 0.62;
+}
+
+.chrome-copy {
+  color: var(--ink);
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--header-ivory) 92%, transparent),
+    0 0 10px color-mix(in srgb, var(--header-ivory) 75%, transparent);
+}
+
+.gate-ornament {
+  position: absolute;
+  inset: 0;
   z-index: 0;
-  height: clamp(5.25rem, 14vw, 8.75rem);
-  background: var(--ink);
-  opacity: 0.92;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center bottom;
-  mask-position: center bottom;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
-.gate-rail-footer {
-  position: relative;
-  z-index: 0;
-  height: clamp(6.5rem, 16vw, 10.5rem);
-  background: var(--gold);
-  opacity: 0.55;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center bottom;
-  mask-position: center bottom;
+.gate-ornament-img {
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.62;
 }
 
-.header-star {
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--gold) 55%, transparent));
+.gate-ornament-nav .gate-ornament-img {
+  object-position: center 30%;
 }
 
-@media (min-width: 1024px) {
-  .gate-rail {
-    height: 3.25rem;
+.gate-ornament-footer .gate-ornament-img {
+  object-position: center bottom;
+  opacity: 0.58;
+}
+
+@media (max-width: 767px) {
+  .gate-ornament-img {
+    object-position: center;
+    transform: scale(1.35);
   }
 }
 
@@ -372,26 +390,6 @@ figure img {
   }
 }
 
-.hero-slideshow-nav {
-  position: absolute;
-  top: 50%;
-  z-index: 10;
-  display: inline-flex;
-  height: 2.5rem;
-  width: 2.5rem;
-  transform: translateY(-50%);
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--parchment) 88%, transparent);
-  color: var(--ink);
-}
-
-.hero-slideshow-nav:hover,
-.hero-slideshow-nav:focus-visible {
-  background: var(--parchment);
-}
-
 .nav-link {
   position: relative;
   text-decoration: none;
@@ -399,7 +397,7 @@ figure img {
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  color: var(--ink);
+  color: var(--gold);
 }
 
 .nav-link:hover::after,
@@ -407,25 +405,11 @@ figure img {
 .nav-link.is-active::after {
   content: "";
   position: absolute;
-  left: 0.7em;
-  right: 0.7em;
-  bottom: 0.15em;
-  height: 2px;
+  left: 0.15em;
+  right: 0.15em;
+  bottom: 0;
+  height: 1px;
   background: var(--gold);
-}
-
-.gate-rail-divider {
-  height: 1.85rem;
-  opacity: 0.55;
-}
-
-.gate-rail-active {
-  width: 3rem;
-  height: 1.15rem;
-  margin-inline: auto;
-  opacity: 0.9;
-  -webkit-mask-size: contain;
-  mask-size: contain;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -440,9 +424,5 @@ figure img {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .gate-rail {
-    transition: none;
   }
 }
