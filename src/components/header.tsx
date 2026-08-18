@@ -53,20 +53,20 @@ export function Header() {
             alt="BSBI Synagogue"
             width={280}
             height={123}
-            className="h-4 w-auto max-w-[4rem] object-contain object-left lg:h-5 lg:max-w-[4.75rem]"
+            className="site-logo"
             priority
           />
         </Link>
 
         <button
           type="button"
-          className="relative z-[60] mr-3 inline-flex size-10 shrink-0 touch-manipulation items-center justify-center border border-line bg-beige shadow-[0_0_16px_rgba(232,213,181,0.9)] sm:mr-4"
+          className="relative z-[60] mr-3 inline-flex size-8 shrink-0 touch-manipulation items-center justify-center border border-line bg-beige sm:mr-4"
           aria-expanded={open}
           aria-controls={menuId}
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? <X className="pointer-events-none size-5" aria-hidden /> : <Menu className="pointer-events-none size-5" aria-hidden />}
+          {open ? <X className="pointer-events-none size-4" aria-hidden /> : <Menu className="pointer-events-none size-4" aria-hidden />}
         </button>
       </div>
 
@@ -96,8 +96,8 @@ export function Header() {
               <SplitText
                 text="Menu"
                 tag="p"
-                delay={40}
-                duration={0.45}
+                delay={90}
+                duration={0.95}
                 animateOnMount
                 className="display relative z-10 text-2xl text-ink"
                 textAlign="left"

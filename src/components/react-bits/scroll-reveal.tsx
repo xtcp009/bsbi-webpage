@@ -61,7 +61,7 @@ export default function ScrollReveal({
             scroller,
             start: "top bottom",
             end: "bottom 70%",
-            scrub: 0.6,
+            scrub: 1.4,
           },
         },
       );
@@ -74,13 +74,13 @@ export default function ScrollReveal({
           ease: "none",
           opacity: 1,
           filter: "blur(0px)",
-          stagger: 0.04,
+          stagger: 0.08,
           scrollTrigger: {
             trigger: el,
             scroller,
             start: "top 90%",
             end: "bottom 65%",
-            scrub: 0.6,
+            scrub: 1.4,
           },
         },
       );

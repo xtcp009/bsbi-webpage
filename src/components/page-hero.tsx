@@ -17,9 +17,9 @@ export function PageHero({
         <BlurText
           text={title}
           tag="h1"
-          delay={70}
+          delay={140}
           direction="bottom"
-          stepDuration={0.28}
+          stepDuration={0.55}
           className={`display max-w-3xl text-3xl text-charleston sm:text-4xl ${kicker ? "mt-3" : ""}`}
           animationFrom={{ filter: "blur(8px)", opacity: 0, y: 14 }}
           animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}

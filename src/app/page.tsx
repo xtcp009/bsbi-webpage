@@ -38,8 +38,8 @@ export default async function HomePage() {
           <SplitText
             text="Brith Sholom Beth Israel"
             tag="h1"
-            delay={70}
-            duration={0.7}
+            delay={140}
+            duration={1.35}
             className="display max-w-4xl text-[clamp(2.4rem,6.4vw,4.6rem)] leading-[0.94] text-charleston"
           />
           <FadeContent>
@@ -162,10 +162,11 @@ export default async function HomePage() {
                 <ScaledImage
                   src={item.image}
                   alt={item.alt}
-                  fill
+                  width={1024}
+                  height={1024}
+                  quality={90}
                   sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover object-center"
-                  frameClassName="aspect-[4/3] w-full bg-cream"
+                  frameClassName="w-full bg-cream"
                 />
                 <h3 className="display mt-4 text-xl text-charleston">{item.title}</h3>
                 <p className="mt-1 text-base text-muted">

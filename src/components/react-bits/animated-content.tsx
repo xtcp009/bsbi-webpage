@@ -25,7 +25,7 @@ export default function AnimatedContent({
   distance = 28,
   direction = "vertical",
   reverse = false,
-  duration = 0.7,
+  duration = 1.35,
   ease = "power3.out",
   initialOpacity = 0,
   animateOpacity = true,

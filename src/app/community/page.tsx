@@ -20,14 +20,15 @@ export default function CommunityPage() {
           <p className="lede mt-3 text-muted">Open to the community. Come as you are.</p>
           <div className="mt-10">
             {weeklyClasses.map((item) => (
-              <article key={item.title} className="grid gap-6 border-t border-line py-10 md:grid-cols-[12rem_minmax(0,1fr)]">
+              <article key={item.title} className="grid gap-8 border-t border-line py-12 lg:grid-cols-[minmax(18rem,32rem)_minmax(0,1fr)] lg:items-start">
                 <ScaledImage
                   src={item.image}
                   alt={item.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 12rem"
-                  className="object-cover object-center"
-                  frameClassName="aspect-square w-full max-w-xs md:max-w-none"
+                  width={1024}
+                  height={1024}
+                  quality={90}
+                  sizes="(max-width: 1024px) 100vw, 32rem"
+                  frameClassName="w-full bg-cream"
                 />
                 <div className="md:pt-1">
                   <h3 className="display text-2xl text-charleston">{item.title}</h3>

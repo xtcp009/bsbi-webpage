@@ -7,7 +7,7 @@ type Props = Omit<ImageProps, "className"> & {
 
 export function ScaledImage({ className = "", frameClassName = "", alt, fill, sizes, ...props }: Props) {
   return (
-    <div className={`relative min-w-0 overflow-hidden ${frameClassName}`}>
+    <div className={`relative min-w-0 ${fill ? "overflow-hidden" : ""} ${frameClassName}`}>
       <Image
         alt={alt}
         fill={fill}

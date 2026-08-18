@@ -25,7 +25,9 @@
   --page-narrow: 42rem;
   --page-pad: clamp(1.25rem, 3.6vw, 2.5rem);
   --section-y: clamp(2.5rem, 5vw, 5.5rem);
-  --header-h: clamp(3.75rem, 9vw, 5.75rem);
+  --header-h: clamp(3.85rem, 8.5vw, 5.35rem);
+  --logo-h: min(clamp(1.6rem, 0.85rem + 3.3vw, 3.4rem), calc(var(--header-h) * 0.82));
+  --logo-w: min(clamp(3.7rem, 1.8rem + 7.6vw, 7.9rem), calc(var(--header-h) * 1.86));
   --header-ivory: var(--beige);
   --footer-navy: #111a25;
 }
@@ -123,6 +125,9 @@ img,
 video,
 iframe {
   max-width: 100%;
+}
+
+img:not([data-nimg]) {
   height: auto;
 }
 
@@ -328,16 +333,12 @@ figure img {
 
 .site-header::before {
   z-index: 2;
-  box-shadow:
-    inset 56px 0 36px rgba(232, 213, 181, 0.78),
-    inset -56px 0 36px rgba(232, 213, 181, 0.78),
-    inset 0 -18px 22px rgba(232, 213, 181, 0.55),
-    inset 0 12px 16px rgba(232, 213, 181, 0.28);
   background: linear-gradient(
-    to bottom,
-    rgba(232, 213, 181, 0.22) 0%,
-    rgba(232, 213, 181, 0.08) 55%,
-    rgba(232, 213, 181, 0.18) 100%
+    to right,
+    rgba(232, 213, 181, 0.55) 0%,
+    rgba(232, 213, 181, 0.12) 14%,
+    rgba(232, 213, 181, 0.12) 86%,
+    rgba(232, 213, 181, 0.55) 100%
   );
 }
 
@@ -370,7 +371,13 @@ figure img {
 }
 
 .site-header .chrome-copy img {
-  filter: drop-shadow(0 0 10px rgba(232, 213, 181, 0.95));
+  display: block;
+  height: var(--logo-h);
+  width: auto;
+  max-width: var(--logo-w);
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 0 6px rgba(232, 213, 181, 0.95));
 }
 
 .gate-ornament {
@@ -388,66 +395,43 @@ figure img {
   opacity: 0.62;
 }
 
-.gate-fill {
-  position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--ink) 38%, transparent);
-  opacity: 0.28;
-  -webkit-mask-image: url("/ornaments/bsbi-gate-nav.svg");
-  mask-image: url("/ornaments/bsbi-gate-nav.svg");
-  -webkit-mask-repeat: repeat-x;
-  mask-repeat: repeat-x;
-  -webkit-mask-size: auto 160%;
-  mask-size: auto 160%;
-  -webkit-mask-position: center bottom;
-  mask-position: center bottom;
-}
-
 .gate-span {
   position: absolute;
   inset: 0;
-  display: flex;
 }
 
-.gate-tile {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.gate-tile-flip .gate-ornament-img {
-  transform: scaleX(-1);
-}
-
-.gate-ornament-nav .gate-ornament-img {
-  object-fit: cover;
-  object-position: center top;
-  opacity: 0.86;
-}
-
-.gate-blend,
-.gate-tile::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.gate-tile::after {
-  box-shadow:
-    inset 36px 0 28px rgba(232, 213, 181, 0.58),
-    inset -36px 0 28px rgba(232, 213, 181, 0.58);
+.gate-ornament-nav .gate-span {
+  top: 0.35rem;
+  background-image: url("/ornaments/gate-nav.png");
+  background-repeat: repeat-x;
+  background-position: center top;
+  background-size: auto 145%;
+  opacity: 0.8;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 78%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 78%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 .gate-blend {
+  position: absolute;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
   background: linear-gradient(
     to right,
-    rgba(232, 213, 181, 0.72) 0%,
-    rgba(232, 213, 181, 0) 14%,
-    rgba(232, 213, 181, 0) 86%,
-    rgba(232, 213, 181, 0.72) 100%
+    rgba(232, 213, 181, 0.7) 0%,
+    rgba(232, 213, 181, 0) 12%,
+    rgba(232, 213, 181, 0) 88%,
+    rgba(232, 213, 181, 0.7) 100%
   );
 }
 
@@ -471,26 +455,7 @@ figure img {
   padding: 5rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
   box-shadow:
     -1px 0 0 rgba(36, 35, 31, 0.12),
-    -28px 0 40px rgba(36, 35, 31, 0.18),
-    inset 32px 0 28px rgba(232, 213, 181, 0.45);
-}
-
-.site-sidebar::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4.5rem;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--ink) 42%, transparent);
-  opacity: 0.22;
-  -webkit-mask-image: url("/ornaments/bsbi-gate-nav.svg");
-  mask-image: url("/ornaments/bsbi-gate-nav.svg");
-  -webkit-mask-repeat: repeat-y;
-  mask-repeat: repeat-y;
-  -webkit-mask-size: auto 9rem;
-  mask-size: auto 9rem;
-  -webkit-mask-position: left center;
-  mask-position: left center;
+    -28px 0 40px rgba(36, 35, 31, 0.18);
 }
 
 @media (max-width: 767px) {

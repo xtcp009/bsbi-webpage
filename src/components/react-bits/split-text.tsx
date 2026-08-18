@@ -25,8 +25,8 @@ type SplitTextProps = {
 export default function SplitText({
   text,
   className = "",
-  delay = 50,
-  duration = 0.6,
+  delay = 90,
+  duration = 1.1,
   ease = "power3.out",
   splitType = "words",
   from = { opacity: 0, y: 22, filter: "blur(6px)" },

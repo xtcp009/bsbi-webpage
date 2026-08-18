@@ -32,7 +32,7 @@ export default function FadeContent({
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.7,
+          duration: 1.4,
           delay,
           ease: "power2.out",
           scrollTrigger: {
