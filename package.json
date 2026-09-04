@@ -1,6 +1,9 @@
 {
   "name": "bsbi",
   "private": true,
+  "workspaces": [
+    "web"
+  ],
   "scripts": {
     "dev": "npm run dev --prefix web",
     "dev:studio": "npm run dev --prefix studio",
