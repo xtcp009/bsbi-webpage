@@ -1,0 +1,39 @@
+import type { Metadata } from "next";
+import { ActionLink, PageHero } from "@/components/page-hero";
+import { ScaledImage } from "@/components/scaled-image";
+import { getSiteContent } from "@/lib/cms";
+import { pageMeta, pages } from "@/lib/seo";
+import { site } from "@/lib/site";
+
+export const metadata: Metadata = pageMeta(pages.membership.title, pages.membership.description, pages.membership.path);
+
+export const revalidate = 30;
+
+export default async function MembershipPage() {
+  const { copy } = await getSiteContent();
+  return (
+    <>
+      <PageHero title="Join BSBI" lede={copy.membershipLead} />
+      <div className="wrap-narrow section flex flex-col gap-6">
+        <p className="text-base leading-relaxed">{copy.membershipBody}</p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <ActionLink href={site.membershipApplicationUrl}>Membership Application</ActionLink>
+          <ActionLink href={site.phoneHref} variant="ghost">
+            Call {site.phoneDisplay}
+          </ActionLink>
+        </div>
+        <a href={site.membershipApplicationUrl} className="mt-4 block" aria-label="Open the BSBI membership application">
+          <ScaledImage
+            src={site.membershipApplicationUrl}
+            alt="BSBI membership application form"
+            fill
+            sizes="(max-width: 768px) 100vw, 42rem"
+            className="object-contain object-top bg-cream"
+            frameClassName="aspect-[8.5/11] w-full border border-line bg-cream"
+          />
+        </a>
+        <p className="text-sm text-muted">{copy.membershipApplicationNote}</p>
+      </div>
+    </>
+  );
+}
