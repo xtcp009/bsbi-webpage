@@ -73,7 +73,7 @@ export type ShulcloudSnapshot = {
   nextHoliday?: { name: string; when: string };
   zmanim: { label: string; time: string }[];
   eruv: LiveEruv | null;
-  week: { date: string; label: string; hebrew?: string; items: CalendarEntry[] }[];
+  week: { date: string; label: string; weekday: string; hebrew?: string; items: CalendarEntry[] }[];
   events: CalendarEntry[];
 };
 
@@ -337,7 +337,13 @@ function parseWeek(html: string): ShulcloudSnapshot["week"] {
         note: description || location || undefined,
       });
     }
-    days.push({ date: meta.date, label: meta.label, hebrew: meta.hebrew, items });
+    days.push({
+      date: meta.date,
+      label: meta.label,
+      weekday: meta.weekday,
+      hebrew: meta.hebrew,
+      items,
+    });
   }
   return days;
 }

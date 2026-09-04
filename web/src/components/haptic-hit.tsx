@@ -95,7 +95,7 @@ export function HapticSummary({
   className?: string;
   kind?: HapticKind;
 }) {
-  const summaryRef = useRef<HTMLSummaryElement>(null);
+  const summaryRef = useRef<HTMLElement>(null);
 
   return (
     <summary ref={summaryRef} className={`haptic-hit${className ? ` ${className}` : ""}`}>
