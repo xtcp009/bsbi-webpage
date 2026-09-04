@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "npm run dev --prefix web",
     "dev:studio": "npm run dev --prefix studio",
-    "build": "npm ci --prefix web --include=dev && npm run build --prefix web",
+    "build": "npm ci --prefix web --include=dev && npm run build --prefix web && node -e \"require('fs').cpSync('web/.next','.next',{recursive:true}); require('fs').cpSync('web/public','public',{recursive:true});\"",
     "typegen": "npm run typegen --prefix studio",
     "seed": "npm run seed --prefix studio"
   },
