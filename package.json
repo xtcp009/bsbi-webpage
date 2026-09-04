@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "npm run dev --prefix web",
     "dev:studio": "npm run dev --prefix studio",
-    "build": "npm ci --prefix web && npm run build --prefix web",
+    "build": "npm ci --prefix web --include=dev && npm run build --prefix web",
     "typegen": "npm run typegen --prefix studio",
     "seed": "npm run seed --prefix studio"
   },
