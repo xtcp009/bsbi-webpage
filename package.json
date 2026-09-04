@@ -10,5 +10,8 @@
     "build": "npm run build --prefix web",
     "typegen": "npm run typegen --prefix studio",
     "seed": "npm run seed --prefix studio"
+  },
+  "dependencies": {
+    "next": "16.3.1"
   }
 }
