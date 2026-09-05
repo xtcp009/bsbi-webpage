@@ -472,7 +472,6 @@ mark.search-hit {
   min-height: var(--header-h);
   padding-left: max(0.75rem, env(safe-area-inset-left));
   padding-right: max(1rem, env(safe-area-inset-right));
-  text-shadow: 0 1px 10px rgba(255, 253, 248, 0.9);
 }
 
 @media (min-width: 640px) {
@@ -489,16 +488,14 @@ mark.search-hit {
   max-width: var(--logo-w);
   object-fit: contain;
   object-position: left center;
-  filter: drop-shadow(0 0 10px rgba(255, 253, 248, 0.95));
 }
 
 .site-header.site-header-on-hero .chrome-copy {
   color: var(--cream);
-  text-shadow: 0 1px 14px rgba(24, 42, 34, 0.7);
 }
 
 .site-header.site-header-on-hero .site-logo {
-  filter: brightness(0) invert(1) drop-shadow(0 1px 12px rgba(24, 42, 34, 0.65));
+  filter: brightness(0) invert(1);
 }
 
 .gate-ornament {
