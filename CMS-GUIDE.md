@@ -48,4 +48,4 @@ Each page form already has the current wording filled in. Empty boxes fall back 
 
 Under **More** you can still change announcements, extra events, class details, the photo gallery, and staff.
 
-The Next app reads published content with `SANITY_API_READ_TOKEN` in `web/.env.local` (gitignored).
+The Next app reads published content with `SANITY_API_READ_TOKEN` in `.env.local` (gitignored).

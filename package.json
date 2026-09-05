@@ -1,14 +1,36 @@
 {
   "name": "bsbi",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run dev --prefix web",
+    "dev": "next dev --hostname :: --port 3000",
     "dev:studio": "npm run dev --prefix studio",
-    "build": "npm ci --prefix web --include=dev && npm run build --prefix web && node -e \"require('fs').cpSync('web/.next','.next',{recursive:true}); require('fs').cpSync('web/public','public',{recursive:true});\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
     "typegen": "npm run typegen --prefix studio",
     "seed": "npm run seed --prefix studio"
   },
   "dependencies": {
-    "next": "16.3.1"
+    "@gsap/react": "^2.1.2",
+    "@sanity/image-url": "^1.2.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.31.0",
+    "next-sanity": "^11.6.10",
+    "motion": "^13.1.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

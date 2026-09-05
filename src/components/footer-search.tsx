@@ -42,6 +42,7 @@ export function FooterSearch({ content }: { content: SiteContent }) {
             autoComplete="off"
             enterKeyHint="search"
             className="footer-search-input w-full py-2.5 pr-3 pl-10 text-base outline-none"
+            suppressHydrationWarning
           />
         </div>
         <HapticHit kind="medium" className="inline-flex shrink-0">

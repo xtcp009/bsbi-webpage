@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-web/node_modules
 studio/node_modules
 /.pnp
 .pnp.*
@@ -17,7 +16,6 @@ studio/node_modules
 
 # next.js
 /.next/
-web/.next/
 /out/
 studio/.sanity/
 

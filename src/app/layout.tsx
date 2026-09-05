@@ -82,8 +82,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${sourceSerif.variable} ${sourceSans.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-cream text-ink">
+      <body className="flex min-h-full flex-col bg-cream text-ink" suppressHydrationWarning>
         <HapticRoot />
         <ClickSpark>
           <a className="skip-link" href="#main">

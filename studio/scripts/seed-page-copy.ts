@@ -5,7 +5,7 @@ import {
   historyMilestones,
   hotels,
   kosherPlaces,
-} from '../../web/src/content/copy'
+} from '../../src/content/copy'
 
 const client = getCliClient({apiVersion: '2026-05-19'})
 
