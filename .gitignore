@@ -19,6 +19,9 @@ studio/node_modules
 /out/
 studio/.sanity/
 
+# Leftover local Next app from before the site lived at the repo root.
+/web
+
 # production
 /build
 
